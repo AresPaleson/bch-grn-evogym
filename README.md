@@ -1,6 +1,6 @@
-(in the instruction below, the folder referred to as 'base' holds the current repo)
+(in the instructions below, the folder referred to as 'base' holds the current repo)
 
-# Base (GRN + EA with EvoGym simulation)
+# Base (GRN + EA with simulation connection)
 
 This folder contains the evolutionary pipeline:
 - genome/GRN development (`algorithms/GRN_2D.py`)
@@ -21,10 +21,10 @@ Core Python packages used by `base`:
 - `cma`
 - `gymnasium`
 
-Plus local EvoGym package from this repo:
-- `../evogym` (original evogym should be cloned and installed in the same parent folder of base)
+Plus EvoGym:
+- `../evogym` (install using original instructions: https://evolutiongym.github.io/)
 
-## Environment setup (recommended)
+## Environment setup  
 
 From repository root:
 
