@@ -1,3 +1,5 @@
+(in the instruction below, the folder referred to as 'base' holds the current repo)
+
 # Base (GRN + EA with EvoGym simulation)
 
 This folder contains the evolutionary pipeline:
@@ -20,7 +22,7 @@ Core Python packages used by `base`:
 - `gymnasium`
 
 Plus local EvoGym package from this repo:
-- `../evogym`
+- `../evogym` (original evogym should be cloned and installed in the same parent folder of base)
 
 ## Environment setup (recommended)
 
@@ -30,7 +32,6 @@ From repository root:
 python3.9 -m venv --system-site-packages .venv
 source .venv/bin/activate
 pip install gymnasium scikit-learn lxml cma
-pip install -e ./evogym --no-deps --no-build-isolation
 ```
 
 If needed, install base requirements too:
@@ -39,15 +40,6 @@ If needed, install base requirements too:
 pip install -r ./base/requirements.txt
 ```
 
-## Quick test
-
-Run the prep test (builds one random robot payload in memory and prints arrays):
-
-```bash
-cd base
-source ../.venv/bin/activate
-python simulation/prepare_robot_files.py
-```
 
 Run a small simulation smoke test:
 
@@ -103,15 +95,4 @@ print("displacement:", ind.displacement)
 PY
 ```
 
-## Performance controls (Mac/Linux)
-
-Use CLI args in experiment runs:
-- `--evogym_num_workers` (0 = auto, otherwise fixed worker count)
-- `--evogym_steps`
-- `--evogym_init_x`
-- `--evogym_init_y`
-- `--evogym_action_bias`
-- `--evogym_action_amplitude`
-- `--evogym_period_steps`
-
-For laptops, set workers below max cores to reduce thermal throttling.
+ 
