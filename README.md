@@ -32,14 +32,8 @@ From repository root:
 python3.9 -m venv --system-site-packages .venv
 source .venv/bin/activate
 pip install gymnasium scikit-learn lxml cma
-```
-
-If needed, install base requirements too:
-
-```bash
 pip install -r ./base/requirements.txt
 ```
-
 
 Run a small simulation smoke test:
 
