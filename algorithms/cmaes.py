@@ -7,178 +7,124 @@ import cma
 import time
 
 ROOT = Path(__file__).resolve().parent.parent
+
 sys.path.append(str(ROOT))
 
 from algorithms.experiment import Experiment
 from algorithms.EA_classes import Individual
-from algorithms.GRN_2D import GRN, initialization
+from algorithms.GRN import GRN, initialization
 from simulation.simulation_resources import simulate_evogym_batch
 from simulation.prepare_robot_files import prepare_robot_files
-from utils.metrics import genopheno_abs_metrics, behavior_abs_metrics, relative_metrics
+from utils.metrics import genopheno_abs_metrics, relative_metrics
 from utils.config import Config
 
 
 class CMAES(Experiment):
+
     def __init__(self, args=None):
-        # Keep args/CLI behavior identical
-        self.args = Config()._get_params()
-        super().__init__(self.args)  # NOTE: rng is created in recover_db(), not here
-
-        # experiment-level params used by GRN logic (unchanged)
+        self.args = args if args is not None else Config()._get_params()
+        super().__init__(self.args)
         self.PROMOTOR_THRESHOLD = 0.95
-
-        # Keep “initial genome size” as the CMA-ES dimension
         self.GENOME_SIZE = 300
         self.N = self.GENOME_SIZE
-
-        # CMA-ES step-size (values mapped to [0,1] via sigmoid later)
         self.sigma0 = 0.2
-
-        # carry over all params as before
         self.cube_face_size = self.args.cube_face_size
         self.max_voxels = self.args.max_voxels
-        self.tfs = self.args.tfs
+        self.voxel_types = self.args.voxel_types
         self.plastic = self.args.plastic
         self.env_conditions = self.args.env_conditions
-
-        self.population_size = self.args.population_size  # CMA-ES lambda (popsize)
+        self.population_size = self.args.population_size
         self.num_generations = self.args.num_generations
         self.fitness_metric = self.args.fitness_metric
-
-        # CMA objects are created in run() AFTER recover_db() (so rng exists)
         self.cma_opts = None
         self.es = None
 
-    # ---------- GRN dev (unchanged) ----------
-    def develop_phenotype(self, genome, tfs):
+    def develop_phenotype(self, genome, voxel_types):
         phenotype = GRN(
             promoter_threshold=self.PROMOTOR_THRESHOLD,
             max_voxels=self.max_voxels,
             cube_face_size=self.cube_face_size,
-            tfs=tfs,
+            voxel_types=voxel_types,
             genotype=genome,
             env_conditions=self.env_conditions,
             plastic=self.plastic,
         ).develop()
-
         phenotype_materials = np.zeros(phenotype.shape, dtype=int)
         for index, value in np.ndenumerate(phenotype):
             phenotype_materials[index] = value.voxel_type if value != 0 else 0
         return phenotype_materials
 
-    # ---------- CMA vector -> Individual ----------
     def vector_to_individual(self, x, generation):
-        # Map CMA internal real vector -> [0,1] genotype expected by your GRN encoding
         x = np.asarray(x, dtype=float)
-        #x = 1.0 / (1.0 + np.exp(-x))  # sigmoid -> [0,1]
         genome = list(x)
-
         self.id_counter += 1
         ind = Individual(genome, self.id_counter, parent1_id=None, parent2_id=None)
         ind.born_generation = generation
         return ind
 
-    # ---------- Main run ----------
     def run(self):
-        # IMPORTANT: this is where rng/session/id_counter are created in your framework
         super().recover_db()
-
         last_gen, recovered_population = self._recover_state()
-
-        # CMA-ES options: seed must match random.Random API (self.rng is random.Random())
         self.cma_opts = {
             "popsize": self.population_size,
             "seed": int(self.rng.randint(1, 2**31 - 1)),
-            "bounds": [0.0, 1.0],  # ON
+            "bounds": [0.0, 1.0],
         }
-
-        # Build / resume CMA-ES state using ONLY info available in DB (genome in [0,1])
         if recovered_population is None:
             start_gen = 1
             x0 = np.asarray(initialization(self.rng, self.GENOME_SIZE), dtype=float)
-            #if x0.size != self.N:
-              #  raise ValueError(f"Initializer returned {x0.size} dims, expected {self.N}")
             self.es = cma.CMAEvolutionStrategy(x0, self.sigma0, self.cma_opts)
         else:
             start_gen = last_gen + 1
             best = max(recovered_population, key=lambda ind: ind.fitness)
-
-            # best.genome is stored after sigmoid mapping, so it should be in [0,1]
             g = np.asarray(best.genome, dtype=float)
             if g.size != self.N:
-                # If dimensions mismatch, fall back to initializer mean
                 x0 = np.asarray(initialization(self.rng, self.GENOME_SIZE), dtype=float)
             else:
-                # inverse sigmoid (logit) to move back to CMA internal space
                 eps = 1e-9
                 g = np.clip(g, eps, 1.0 - eps)
                 x0 = np.log(g / (1.0 - g))
-
             self.es = cma.CMAEvolutionStrategy(x0, self.sigma0, self.cma_opts)
-
             print(
                 f"Recovered last completed generation = {last_gen}, "
                 f"population size = {len(recovered_population)}, next id = {self.id_counter + 1}"
             )
-
-        # If DB already beyond requested gens, finish cleanly (same “do nothing” behavior but explicit)
         if start_gen > self.num_generations:
             print(f"Nothing to do: start_gen={start_gen} > num_generations={self.num_generations}")
             return
-
         for generation in range(start_gen, self.num_generations + 1):
-            xs = self.es.ask()  # list of candidate vectors
-
+            xs = self.es.ask()
             individuals = [self.vector_to_individual(x, generation) for x in xs]
-
-            # Develop + metrics + prepare sim (same pipeline)
             for ind in individuals:
-                ind.phenotype = self.develop_phenotype(ind.genome, self.tfs)
-                genopheno_abs_metrics(ind)
-
+                ind.phenotype = self.develop_phenotype(ind.genome, self.voxel_types)
+                genopheno_abs_metrics(ind, self.args)
                 if self.args.run_simulation:
                     prepare_robot_files(ind, self.args)
-
             if self.args.run_simulation:
                 simulate_evogym_batch(individuals, self.args)
-                for ind in individuals:
-                    behavior_abs_metrics(ind)
-
-            # Relative metrics within this batch
             relative_metrics(individuals, self.args, generation)
-
-            # CMA-ES minimizes; your fitness is maximized -> loss = -fitness
             losses = [-float(ind.fitness) for ind in individuals]
             self.es.tell(xs, losses)
-
-            # Persist: treat evaluated batch as "robots_this_gen";
-            # choose best popsize as "survivors" (for DB compatibility)
             individuals_sorted = sorted(individuals, key=lambda ind: ind.fitness, reverse=True)
             survivors = individuals_sorted[: self.population_size]
-
             self._persist_generation_atomic(generation, individuals, survivors)
             print(
                 f"Finished generation {generation}. Best fitness: {survivors[0].fitness:.4f}",
                 flush=True,
             )
-
         try:
             self.session.close()
         except Exception:
             pass
-
         path_robots = f"{self.args.out_path}/{self.args.study_name}/{self.args.experiment_name}/run_{self.args.run}/robots"
         if os.path.exists(path_robots):
             shutil.rmtree(path_robots)
-
         print("Finished optimizing.")
-
 
 if __name__ == "__main__":
     start = time.time()
     CMAES().run()
     end = time.time()
-
     elapsed = end - start
     hours = int(elapsed // 3600)
     minutes = int((elapsed % 3600) // 60)

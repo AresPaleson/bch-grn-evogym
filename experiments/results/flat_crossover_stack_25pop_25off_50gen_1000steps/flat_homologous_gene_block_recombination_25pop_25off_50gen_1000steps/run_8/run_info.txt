@@ -1,0 +1,123 @@
+Experiment Run Info
+===================
+
+Run
+---
+status: completed
+started_at: 2026-06-11T09:59:17+02:00
+ended_at: 2026-06-11T10:22:41+02:00
+elapsed: 0h 23m 24.5s (1404.5 seconds)
+algorithm: basic_EA
+study_name: flat_crossover_stack_25pop_25off_50gen_1000steps
+experiment_name: flat_homologous_gene_block_recombination_25pop_25off_50gen_1000steps
+run: 8
+crossover_type: homologous_gene_block_recombination
+
+Paths
+-----
+workspace_root: C:\Users\silen\staff\bch\evogym-GRN
+run_directory: C:\Users\silen\staff\bch\evogym-GRN\exps-final2\flat_crossover_stack_25pop_25off_50gen_1000steps\flat_homologous_gene_block_recombination_25pop_25off_50gen_1000steps\run_8
+database_path: C:\Users\silen\staff\bch\evogym-GRN\exps-final2\flat_crossover_stack_25pop_25off_50gen_1000steps\flat_homologous_gene_block_recombination_25pop_25off_50gen_1000steps\run_8\run_8
+database_exists: True
+manual_stop_file: C:\Users\silen\staff\bch\evogym-GRN\exps-final2\flat_crossover_stack_25pop_25off_50gen_1000steps\flat_homologous_gene_block_recombination_25pop_25off_50gen_1000steps\run_8\STOP
+
+Database Summary
+----------------
+seed: 3604370423
+completed_generation: 50
+robots_saved: 1250
+survivor_rows_saved: 1250
+
+best_final_generation_robot:
+  generation: 50
+  robot_id: 1120
+  fitness: 64.8349661392996
+  displacement: 64.8349661392996
+  valid: 1.0
+  born_generation: 45
+  num_voxels: 13.0
+
+best_saved_robot:
+  generation: 45
+  robot_id: 1120
+  fitness: 64.8349661392996
+  displacement: 64.8349661392996
+  valid: 1.0
+  born_generation: 45
+  num_voxels: 13.0
+
+Resolved Settings
+-----------------
+resolved_evogym_env_name: FlatCeiling-v0
+
+Parameters
+----------
+run_experiment: 1
+render_only: False
+population_size: 25
+offspring_size: 25
+num_generations: 50
+evogym_steps: 1000
+record_video: 0
+out_path: exps-final2
+study_name: flat_crossover_stack_25pop_25off_50gen_1000steps
+experiment_name: flat_homologous_gene_block_recombination_25pop_25off_50gen_1000steps
+algorithm: basic_EA
+run: 8
+num_runs: 10
+tournament_k: 4
+parent_tournament_k: None
+max_voxels: 36
+cube_face_size: 6
+voxel_types: withbone
+plastic: 0
+env_conditions: 
+crossover_prob: 1.0
+crossover_type: homologous_gene_block_recombination
+crossover_types: all
+mutation_prob: 0.9
+fitness_metric: displacement
+ea_objectives: fitness,novelty
+novelty_archive_max_size: 100
+novelty_archive_add_k: 1
+simulation_environment: flatceiling
+evogym_env_name: FlatCeiling-v0
+ustatic: 0.5
+udynamic: 0.2
+evogym_left_wall: 0
+evogym_left_wall_height: 8
+evogym_flat_ceiling_gap_blocks: 6
+evogym_flat_ceiling_width: 100
+run_simulation: 1
+evogym_num_workers: 6
+evogym_isolate_tasks: 1
+evogym_init_x: 1
+evogym_init_y: 7
+evogym_action_bias: 1.0
+evogym_action_amplitude: 0.6
+evogym_ann_hidden_size: 8
+evogym_sine_period: 40.0
+evogym_sine_mix: 0.35
+evogym_headless: 1
+evogym_render_mode: screen
+generations: 
+final_gen: 
+experiments: 
+runs: 
+analyze_after_run: 1
+analysis_metrics: size,symmetry,number_of_limbs,total_voxel_volume,bounding_box_area,morphological_density,muscle_to_tissue_ratio,actuation_energy_cost,environmental_contact_area,material_ratios,muscle_phase_ratios
+analysis_output_name: morphology_metrics_progression.png
+fitness_analysis_output_name: fitness_over_generations.png
+stack_analysis_dir_name: analysis
+run_statistical_tests_after_analysis: 1
+statistical_alpha: 0.05
+render_after_run: 0
+render_generation: None
+render_robot_id: None
+render_metric: fitness
+render_headless: 0
+render_render_mode: screen
+record_video_fps: 50
+record_video_stride: 1
+record_video_name: best_robot.gif
+elitism: 3

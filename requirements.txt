@@ -5,3 +5,4 @@ scipy
 pandas
 lxml
 opencv-python
+imageio

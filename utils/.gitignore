@@ -1,0 +1,21 @@
+__pycache__
+
+# Ignore venvs created by Docker or manually
+venv/
+outervenv/
+
+# Ignore all workspace output created by Voxcraft / EA runs
+workspace/
+working_data/
+
+# Ignore voxcraft
+voxcraft-sim/
+voxcraft-viz/
+
+# etc
+**/__pycache__/
+experiments/analysis/.ipynb_checkpoints/
+.idea/
+
+
+

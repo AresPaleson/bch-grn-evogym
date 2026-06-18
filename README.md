@@ -1,15 +1,23 @@
-(in the instructions below, the folder referred to as 'base' holds the current repo)
+# EvoGym GRN Bachelor Thesis Repository
 
-# Base (GRN + EA with simulation connection)
+This repository contains the code and experiment material for the bachelor thesis on
+GRN-developed EvoGym robots and evolutionary crossover operators.
 
-This folder contains the evolutionary pipeline:
-- genome/GRN development (`algorithms/GRN_2D.py`)
-- optimization loops (`algorithms/basic_EA.py`, `algorithms/cmaes.py`)
-- EvoGym preparation and simulation (`simulation/prepare_robot_files.py`, `simulation/simulation_resources.py`)
+## Repository Layout
+
+- `algorithms/` - GRN genome development, evolutionary algorithm classes, and optimization loops.
+- `simulation/` - robot file preparation and EvoGym simulation helpers.
+- `utils/` - shared configuration, metrics, drawing, and body-metric utilities.
+- `run_scripts/` - main runnable experiment entry points.
+- `experiments/analysis/` - analysis, plotting, consolidation, and statistical-test scripts.
+- `experiments/results/final2/` - final thesis experiment outputs and analysis artifacts.
+- `experiments/results/tmp/` - optional location for smoke tests, verification outputs, and temporary generated worlds.
+- `evogym/` - external EvoGym source dependency; keep untouched unless intentionally updating EvoGym itself.
 
 ## Dependencies
 
-Core Python packages used by `base`:
+Core Python packages:
+
 - `numpy`
 - `sqlalchemy`
 - `matplotlib`
@@ -21,72 +29,38 @@ Core Python packages used by `base`:
 - `cma`
 - `gymnasium`
 
-Plus EvoGym:
-- `../evogym` (install using original instructions: https://evolutiongym.github.io/)
+Plus the local EvoGym dependency in `evogym/`.
 
-## Environment setup  
+## Environment Setup
 
-From repository root:
+First Install EvoGym using its original instructions.
+
+From the repository root:
 
 ```bash
 python3.9 -m venv --system-site-packages .venv
 source .venv/bin/activate
-pip install gymnasium scikit-learn lxml cma
-pip install -r ./base/requirements.txt
+pip install -r requirements.txt
 ```
 
-Run a small simulation smoke test:
+On Windows PowerShell:
+
+```powershell
+py -3.9 -m venv --system-site-packages .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+## Common Entry Points
+
+Run the main crossover-stack script:
 
 ```bash
-cd base
-source ../.venv/bin/activate
-python - <<'PY'
-import random
-import numpy as np
-from types import SimpleNamespace
-from algorithms.EA_classes import Individual
-from algorithms.GRN_2D import GRN, initialization
-from simulation.prepare_robot_files import prepare_robot_files
-from simulation.simulation_resources import simulate_evogym_batch
-
-rng = random.Random(3)
-genome = initialization(rng, ini_genome_size=80)
-phenotype_cells = GRN(
-    max_voxels=36,
-    cube_face_size=6,
-    genotype=genome,
-    voxel_types="withbone",
-    env_conditions="",
-    plastic=0,
-).develop()
-
-phenotype_materials = np.zeros(phenotype_cells.shape, dtype=int)
-for idx, value in np.ndenumerate(phenotype_cells):
-    phenotype_materials[idx] = value.voxel_type if value != 0 else 0
-
-ind = Individual(genome=genome, id_counter=1)
-ind.valid = 1
-ind.phenotype = phenotype_materials
-
-args = SimpleNamespace(
-    out_path="/tmp",
-    study_name="demo",
-    experiment_name="smoke",
-    run=1,
-    voxel_types="withbone",
-    evogym_steps=500,
-    evogym_num_workers=1,
-    evogym_init_x=3,
-    evogym_init_y=1,
-    evogym_action_bias=1.0,
-    evogym_action_amplitude=0.4,
-    evogym_period_steps=20,
-)
-
-prepare_robot_files(ind, args)
-simulate_evogym_batch([ind], args)
-print("displacement:", ind.displacement)
-PY
+python run_scripts/run_ea.py
 ```
 
- 
+Run or render a small smoke experiment:
+
+```bash
+python run_scripts/run_smoke_ea.py
+```

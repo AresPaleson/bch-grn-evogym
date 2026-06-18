@@ -1,0 +1,132 @@
+crossover_type,crossover_label,generation_zero_based,original_child_generation,lineage_edge_count,run_count,parent_choice,mean_distance,std_distance,median_distance,q25_distance,q75_distance
+arithmetic_recombination,arithmetic recombination,1,2,6,6,elite_parent,0.548922051051039,0.17608630855572732,0.5745512401778168,0.43310583104729355,0.6961715644126591
+arithmetic_recombination,arithmetic recombination,2,3,5,5,elite_parent,0.32288432993115385,0.2562578072014765,0.3030197809621032,0.2778016650687004,0.315822162293939
+arithmetic_recombination,arithmetic recombination,3,4,2,2,elite_parent,0.20053826360191915,0.2836039321605849,0.20053826360191915,0.10026913180095957,0.3008073954028787
+arithmetic_recombination,arithmetic recombination,4,5,3,3,elite_parent,0.395771344813077,0.2673668770927848,0.5180760347456518,0.303601622169621,0.5490934124228204
+arithmetic_recombination,arithmetic recombination,5,6,4,4,elite_parent,0.3523659206607522,0.3111631720604158,0.326839191302651,0.21994349666074692,0.45926161530265625
+arithmetic_recombination,arithmetic recombination,6,7,5,5,elite_parent,0.26294533593867814,0.3714024544192626,0.0,0.0,0.5285082664011236
+arithmetic_recombination,arithmetic recombination,7,8,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,9,10,4,4,elite_parent,0.16437063084160455,0.2928774927041439,0.02777777777777775,0.0,0.19214840861938232
+arithmetic_recombination,arithmetic recombination,10,11,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,12,13,4,4,elite_parent,0.11072850793330415,0.22145701586660826,0.0,0.0,0.11072850793330415
+arithmetic_recombination,arithmetic recombination,13,14,4,4,elite_parent,0.11516058299845137,0.23032116599690275,0.0,0.0,0.11516058299845137
+arithmetic_recombination,arithmetic recombination,14,15,8,8,elite_parent,0.184994854642073,0.25958038532672206,0.0,0.0,0.4421497054425141
+arithmetic_recombination,arithmetic recombination,15,16,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,16,17,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,17,18,3,3,elite_parent,0.1822471490977342,0.31566132177185613,0.0,0.0,0.2733707236466013
+arithmetic_recombination,arithmetic recombination,18,19,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,19,20,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,20,21,2,2,elite_parent,0.1892765629547161,0.26767748236992445,0.1892765629547161,0.09463828147735805,0.28391484443207415
+arithmetic_recombination,arithmetic recombination,21,22,5,5,elite_parent,0.165565219094309,0.37021508460452107,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,22,23,5,5,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,23,24,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,24,25,3,3,elite_parent,0.06499528260217777,0.1125751317192694,0.0,0.0,0.09749292390326665
+arithmetic_recombination,arithmetic recombination,25,26,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,26,27,4,4,elite_parent,0.19528662393414403,0.27631885209917484,0.09749292390326665,0.0,0.29277954783741067
+arithmetic_recombination,arithmetic recombination,27,28,7,7,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,28,29,4,4,elite_parent,0.050151021713140426,0.10030204342628084,0.0,0.0,0.050151021713140426
+arithmetic_recombination,arithmetic recombination,29,30,7,7,elite_parent,0.065110379269905,0.1722658713172639,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,30,31,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,31,32,5,5,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,32,33,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,33,34,3,3,elite_parent,0.14516576549290952,0.2514344813533482,0.0,0.0,0.2177486482393643
+arithmetic_recombination,arithmetic recombination,34,35,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,35,36,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,36,37,5,5,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,37,38,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,38,39,2,2,elite_parent,0.234298178600131,0.3313476618156189,0.234298178600131,0.1171490893000655,0.3514472679001965
+arithmetic_recombination,arithmetic recombination,39,40,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,40,41,3,3,elite_parent,0.08254176726922786,0.14296653465682846,0.0,0.0,0.1238126509038418
+arithmetic_recombination,arithmetic recombination,41,42,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,42,43,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,43,44,2,2,elite_parent,0.1833161184435406,0.25924814090444775,0.1833161184435406,0.0916580592217703,0.2749741776653109
+arithmetic_recombination,arithmetic recombination,44,45,2,2,elite_parent,0.23596779836098455,0.33370886072542416,0.23596779836098455,0.11798389918049228,0.3539516975414768
+arithmetic_recombination,arithmetic recombination,45,46,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,46,47,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,47,48,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,48,49,1,1,elite_parent,0.0,,0.0,0.0,0.0
+arithmetic_recombination,arithmetic recombination,49,50,3,3,elite_parent,0.08558436165330437,0.1482364627168727,0.0,0.0,0.12837654247995656
+homologous_gene_block_recombination,homologous recombination,1,2,5,5,elite_parent,0.515255197201814,0.2026780499305733,0.4841310499438951,0.38139607098522,0.505988949814461
+homologous_gene_block_recombination,homologous recombination,2,3,4,4,elite_parent,0.2933722451402883,0.20333100571790763,0.36034936567397086,0.23854291989392445,0.4151786909203347
+homologous_gene_block_recombination,homologous recombination,3,4,3,3,elite_parent,0.3555892552740935,0.35981954849906056,0.3472728444629077,0.17363642223145384,0.5333838829111403
+homologous_gene_block_recombination,homologous recombination,4,5,1,1,elite_parent,0.6579594841566121,,0.6579594841566121,0.6579594841566121,0.6579594841566121
+homologous_gene_block_recombination,homologous recombination,5,6,4,4,elite_parent,0.3748063192350731,0.1700908916724503,0.35164823857677474,0.26357865267504543,0.46287590513680243
+homologous_gene_block_recombination,homologous recombination,6,7,5,5,elite_parent,0.5647149838022626,0.3960628872669494,0.4764658595256588,0.4582884950238242,0.920865803013932
+homologous_gene_block_recombination,homologous recombination,7,8,5,5,elite_parent,0.2986365693435144,0.5241723577992257,0.111111111111111,0.0,0.1536631734485384
+homologous_gene_block_recombination,homologous recombination,8,9,8,8,elite_parent,0.30958754218471574,0.2514925663455054,0.2843778427870344,0.14202199390862108,0.49690579589644207
+homologous_gene_block_recombination,homologous recombination,9,10,3,3,elite_parent,0.29732199856692143,0.2653107245022036,0.382033780403936,0.191016890201968,0.44598299785038215
+homologous_gene_block_recombination,homologous recombination,10,11,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,11,12,6,6,elite_parent,0.19516922371993628,0.2801044714752403,0.11135515776466605,0.0,0.22636134339158556
+homologous_gene_block_recombination,homologous recombination,12,13,5,5,elite_parent,0.13955343571960835,0.19252375243017825,0.0,0.0,0.3157333981941058
+homologous_gene_block_recombination,homologous recombination,13,14,2,2,elite_parent,0.25946585683707507,0.36694013371174744,0.25946585683707507,0.12973292841853754,0.3891987852556126
+homologous_gene_block_recombination,homologous recombination,14,15,6,6,elite_parent,0.17357880133150508,0.14632900197149518,0.2060364870370801,0.04734066463620702,0.25689286346892354
+homologous_gene_block_recombination,homologous recombination,15,16,4,4,elite_parent,0.04760180112753415,0.0952036022550683,0.0,0.0,0.04760180112753415
+homologous_gene_block_recombination,homologous recombination,16,17,3,3,elite_parent,0.311416366859109,0.13089724838057326,0.2421610524189263,0.235928519778725,0.35227655671940167
+homologous_gene_block_recombination,homologous recombination,17,18,6,6,elite_parent,0.16716407111074041,0.19510142805649566,0.12108052620946315,0.0,0.2930346550591385
+homologous_gene_block_recombination,homologous recombination,18,19,5,5,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,19,20,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,20,21,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,21,22,4,4,elite_parent,0.046071176496035975,0.09214235299207195,0.0,0.0,0.046071176496035975
+homologous_gene_block_recombination,homologous recombination,22,23,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,23,24,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,24,25,1,1,elite_parent,0.0,,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,25,26,5,5,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,26,27,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,27,28,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,28,29,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,29,30,2,2,elite_parent,0.06599816439337974,0.09333549917684673,0.06599816439337974,0.03299908219668987,0.09899724659006962
+homologous_gene_block_recombination,homologous recombination,30,31,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,31,32,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,32,33,3,3,elite_parent,0.0776437473873427,0.13448291536492082,0.0,0.0,0.11646562108101405
+homologous_gene_block_recombination,homologous recombination,33,34,4,4,elite_parent,0.02452051827037925,0.0490410365407585,0.0,0.0,0.02452051827037925
+homologous_gene_block_recombination,homologous recombination,35,36,3,3,elite_parent,0.15396226413132538,0.26667046392379495,0.0,0.0,0.2309433961969881
+homologous_gene_block_recombination,homologous recombination,36,37,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,37,38,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,38,39,2,2,elite_parent,0.0466327504828545,0.06594866818361333,0.0466327504828545,0.02331637524142725,0.06994912572428175
+homologous_gene_block_recombination,homologous recombination,39,40,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,40,41,2,2,elite_parent,0.0625,0.08838834764831845,0.0625,0.03125,0.09375
+homologous_gene_block_recombination,homologous recombination,41,42,4,4,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,42,43,3,3,elite_parent,0.048734242372853266,0.0844101838581579,0.0,0.0,0.0731013635592799
+homologous_gene_block_recombination,homologous recombination,43,44,1,1,elite_parent,0.0,,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,44,45,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,45,46,1,1,elite_parent,0.0,,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,47,48,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+homologous_gene_block_recombination,homologous recombination,48,49,2,2,elite_parent,0.1123192202834256,0.1588433646399917,0.1123192202834256,0.0561596101417128,0.1684788304251384
+promoter_aligned_cut_and_splice,cut and splice,1,2,5,5,elite_parent,0.6765069028039047,0.5263875935541544,0.5504817018975018,0.4229877667186733,1.1242281302693369
+promoter_aligned_cut_and_splice,cut and splice,2,3,5,5,elite_parent,0.4339352377226067,0.4250626299051485,0.5049283620427176,0.0,0.7238230122664102
+promoter_aligned_cut_and_splice,cut and splice,3,4,4,4,elite_parent,0.6406381704700048,0.5507445374861748,0.6776012000925279,0.28593866699045234,1.0323007035720804
+promoter_aligned_cut_and_splice,cut and splice,4,5,2,2,elite_parent,0.6889823157930559,0.0493626357046785,0.6889823157930559,0.6715299885710462,0.7064346430150656
+promoter_aligned_cut_and_splice,cut and splice,6,7,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,7,8,3,3,elite_parent,0.3719131205014632,0.322292322570498,0.5463451726484168,0.2731725863242084,0.5578696807521948
+promoter_aligned_cut_and_splice,cut and splice,8,9,1,1,elite_parent,0.2657916423324117,,0.2657916423324117,0.2657916423324117,0.2657916423324117
+promoter_aligned_cut_and_splice,cut and splice,9,10,1,1,elite_parent,0.597825733284619,,0.597825733284619,0.597825733284619,0.597825733284619
+promoter_aligned_cut_and_splice,cut and splice,10,11,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,11,12,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,12,13,2,2,elite_parent,0.11553685746158565,0.16339379077614155,0.11553685746158565,0.057768428730792826,0.17330528619237848
+promoter_aligned_cut_and_splice,cut and splice,14,15,2,2,elite_parent,0.1910606860052553,0.27020061338493945,0.1910606860052553,0.09553034300262765,0.28659102900788297
+promoter_aligned_cut_and_splice,cut and splice,16,17,2,2,elite_parent,0.16412957659335195,0.23211427320487202,0.16412957659335195,0.08206478829667598,0.24619436489002794
+promoter_aligned_cut_and_splice,cut and splice,17,18,2,2,elite_parent,0.1359845884195095,0.19231124921659365,0.1359845884195095,0.06799229420975475,0.20397688262926425
+promoter_aligned_cut_and_splice,cut and splice,18,19,1,1,elite_parent,0.546319051629027,,0.546319051629027,0.546319051629027,0.546319051629027
+promoter_aligned_cut_and_splice,cut and splice,19,20,1,1,elite_parent,0.225269987227275,,0.225269987227275,0.225269987227275,0.225269987227275
+promoter_aligned_cut_and_splice,cut and splice,20,21,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,21,22,3,3,elite_parent,0.20465827383775917,0.3544785284763432,0.0,0.0,0.30698741075663877
+promoter_aligned_cut_and_splice,cut and splice,22,23,3,3,elite_parent,0.20465827383775917,0.3544785284763432,0.0,0.0,0.30698741075663877
+promoter_aligned_cut_and_splice,cut and splice,24,25,1,1,elite_parent,0.1363772172172132,,0.1363772172172132,0.1363772172172132,0.1363772172172132
+promoter_aligned_cut_and_splice,cut and splice,25,26,1,1,elite_parent,0.6139748215132775,,0.6139748215132775,0.6139748215132775,0.6139748215132775
+promoter_aligned_cut_and_splice,cut and splice,26,27,1,1,elite_parent,0.3894772537377996,,0.3894772537377996,0.3894772537377996,0.3894772537377996
+promoter_aligned_cut_and_splice,cut and splice,27,28,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,29,30,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,31,32,2,2,elite_parent,0.30615810682903344,0.07073764811654171,0.30615810682903344,0.2811485714948362,0.3311676421632307
+promoter_aligned_cut_and_splice,cut and splice,32,33,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,33,34,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,36,37,2,2,elite_parent,0.09290630905667625,0.13138936229797787,0.09290630905667625,0.04645315452833813,0.1393594635850144
+promoter_aligned_cut_and_splice,cut and splice,37,38,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,38,39,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,39,40,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,40,41,2,2,elite_parent,0.0,0.0,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,43,44,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,44,45,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,45,46,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,46,47,3,3,elite_parent,0.10396387350820276,0.1800707110678712,0.0,0.0,0.15594581026230414
+promoter_aligned_cut_and_splice,cut and splice,47,48,1,1,elite_parent,0.0,,0.0,0.0,0.0
+promoter_aligned_cut_and_splice,cut and splice,49,50,3,3,elite_parent,0.0,0.0,0.0,0.0,0.0

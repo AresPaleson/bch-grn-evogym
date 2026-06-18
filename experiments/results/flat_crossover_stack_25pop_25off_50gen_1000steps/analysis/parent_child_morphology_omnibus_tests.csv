@@ -1,0 +1,9 @@
+metric,response_column,selected_test,n_total,group_count,statistic,p_value,effect_size_name,effect_size,assumptions_supported_parametric,levene_p_value,decision,note
+morph_distance,morph_distance_mean,kruskal_wallis,30,3,18.58838709677417,9.195662602027246e-05,epsilon_squared,0.6143847072879323,False,0.003711259385519261,significant,
+shape_distance,shape_distance_mean,one_way_anova,30,3,20.150571679735044,4.41680111632484e-06,eta_squared,0.5988181083969533,True,0.15954923850513603,significant,
+occupied_union_material_distance,occupied_union_material_distance_mean,kruskal_wallis,30,3,19.447741935483876,5.9837920988434086e-05,epsilon_squared,0.6462126642771806,False,0.01187787434910894,significant,
+material_substitution_distance,material_substitution_distance_mean,one_way_anova,30,3,14.377407086442433,5.605299014572887e-05,eta_squared,0.5157368847777296,True,0.2294992313743717,significant,
+trait_profile_distance,trait_profile_distance_mean,kruskal_wallis,30,3,19.365161290322575,6.236036596780617e-05,epsilon_squared,0.643154121863799,False,0.014811338957009089,significant,
+parent_pair_morph_distance,parent_pair_morph_distance_mean,one_way_anova,30,3,10.30583006922686,0.0004723685018564327,eta_squared,0.43291202362016895,True,0.42735596704065293,significant,
+child_fitness,child_fitness_mean,kruskal_wallis,30,3,21.571612903225798,2.069110931568577e-05,epsilon_squared,0.7248745519713259,False,0.12287069051695765,significant,
+fitness_delta,fitness_delta_mean,kruskal_wallis,30,3,12.552258064516124,0.0018806665215024877,epsilon_squared,0.39082437275985643,False,0.9348447231720465,significant,

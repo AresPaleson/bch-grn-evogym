@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import argparse
 import json
 import shlex
@@ -7,16 +6,17 @@ import subprocess
 import sys
 from pathlib import Path
 from types import SimpleNamespace
-
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent.parent
+
 sys.path.append(str(ROOT))
 
 from algorithms.EA_classes import Individual
-from algorithms.GRN_2D import GRN
+from algorithms.GRN import GRN
 from simulation.prepare_robot_files import prepare_robot_files
 from simulation.simulation_resources import simulate_evogym_batch
+
 PARAM_KEYS = [
     "out_path",
     "study_name",
@@ -36,14 +36,13 @@ PARAM_KEYS = [
     "evogym_render_mode",
 ]
 
-
 def parse_args():
     p = argparse.ArgumentParser(
         description="Visualize top robots from experiment DBs in EvoGym."
     )
     p.add_argument(
         "--params_file",
-        default=str(ROOT / "experiments" / "locomotion.sh"),
+        default="",
         help="Path to experiment params .sh file.",
     )
     p.add_argument(
@@ -85,17 +84,14 @@ def parse_args():
     )
     return p.parse_args()
 
-
 def _split_csv(text):
     if text is None:
         return []
     return [x.strip() for x in str(text).split(",") if x.strip()]
 
-
 def _load_params_from_shell(params_path: Path):
     if not params_path.exists():
         raise FileNotFoundError(f"params file not found: {params_path}")
-
     keys = " ".join(PARAM_KEYS)
     cmd = (
         f"set -a; source {shlex.quote(str(params_path))}; "
@@ -107,7 +103,6 @@ def _load_params_from_shell(params_path: Path):
         text=True,
         capture_output=True,
     )
-
     out = {}
     for line in proc.stdout.splitlines():
         if "=" not in line:
@@ -115,7 +110,6 @@ def _load_params_from_shell(params_path: Path):
         k, v = line.split("=", 1)
         out[k] = v
     return out
-
 
 def _pick_for_experiment(values, exp_idx, field_name):
     if not values:
@@ -128,33 +122,25 @@ def _pick_for_experiment(values, exp_idx, field_name):
         )
     return values[exp_idx]
 
-
 def _db_path(out_path, study_name, experiment_name, run):
     return Path(out_path) / study_name / experiment_name / f"run_{run}" / f"run_{run}"
-
 
 def _table_columns(cur, table_name):
     rows = cur.execute(f"PRAGMA table_info({table_name})").fetchall()
     return {r[1] for r in rows}
 
-
 def _fetch_top_from_db(db_path: Path, metric: str, top_k: int, ascending: bool, generations=None):
     conn = sqlite3.connect(str(db_path))
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-
     robot_cols = _table_columns(cur, "all_robots")
     surv_cols = _table_columns(cur, "generation_survivors")
     direction = "ASC" if ascending else "DESC"
     gen_filter = [int(g) for g in (generations or [])]
-    gen_sql = ""
     gen_params = []
     if gen_filter:
         placeholders = ",".join(["?"] * len(gen_filter))
         gen_params = gen_filter
-
-    # If generations are provided, treat generation_survivors as source of truth
-    # for membership in those generations (join to all_robots for genome/abs metrics).
     if gen_filter:
         if metric in surv_cols:
             metric_expr = f"gs.{metric}"
@@ -166,7 +152,6 @@ def _fetch_top_from_db(db_path: Path, metric: str, top_k: int, ascending: bool, 
             raise ValueError(
                 f"Metric '{metric}' not found in DB columns. Available examples: {valid[:20]}"
             )
-
         rows = cur.execute(
             f"""
             SELECT
@@ -215,7 +200,6 @@ def _fetch_top_from_db(db_path: Path, metric: str, top_k: int, ascending: bool, 
         raise ValueError(
             f"Metric '{metric}' not found in DB columns. Available examples: {valid[:20]}"
         )
-
     conn.close()
     out = []
     for row in rows:
@@ -232,7 +216,6 @@ def _fetch_top_from_db(db_path: Path, metric: str, top_k: int, ascending: bool, 
         )
     return out
 
-
 def _build_phenotype(genome, max_voxels, cube_face_size, voxel_types, env_conditions, plastic):
     cells = GRN(
         max_voxels=max_voxels,
@@ -247,21 +230,19 @@ def _build_phenotype(genome, max_voxels, cube_face_size, voxel_types, env_condit
         materials[idx] = value.voxel_type if value != 0 else 0
     return materials
 
-
 def main():
     args = parse_args()
+    if not args.params_file:
+        raise ValueError("--params_file is required for watch_robots_viz.py.")
     params = _load_params_from_shell(Path(args.params_file).resolve())
-
     experiments = _split_csv(params.get("experiments"))
     runs = [int(x) for x in _split_csv(params.get("runs"))]
     voxel_types_list = _split_csv(params.get("voxel_types"))
     env_conditions_list = _split_csv(params.get("env_conditions"))
-
     if not experiments:
         raise ValueError("No experiments found in params file.")
     if not runs:
         raise ValueError("No runs found in params file.")
-
     top_k = max(1, int(args.top_k))
     if str(args.metric).strip().lower() != "fitness":
         print("[info] --metric is ignored in this viewer; using fitness ranking.")
@@ -270,18 +251,15 @@ def main():
         print("[info] --ascending is deprecated in this viewer; use --rank_mode best|worst.")
     ascending = args.rank_mode == "worst"
     gen_filter = [int(x) for x in _split_csv(args.generations)]
-
     selected = []
     for exp_idx, exp_name in enumerate(experiments):
         voxel_types = _pick_for_experiment(voxel_types_list, exp_idx, "voxel_types")
         env_conditions = _pick_for_experiment(env_conditions_list, exp_idx, "env_conditions")
-
         for run_order, run in enumerate(runs):
             db_path = _db_path(params["out_path"], params["study_name"], exp_name, run)
             if not db_path.exists():
                 print(f"[skip] DB missing: {db_path}")
                 continue
-
             rows = _fetch_top_from_db(
                 db_path,
                 metric=metric,
@@ -291,9 +269,7 @@ def main():
             )
             if not rows:
                 continue
-
             if gen_filter:
-                # top_k per requested generation, in generation order.
                 for g in sorted(set(gen_filter)):
                     picked = 0
                     for row in rows:
@@ -312,7 +288,6 @@ def main():
                     if picked == 0:
                         print(f"[warn] No survivors for exp={exp_name} run={run} generation={g}")
             else:
-                # top_k over all generations for each run.
                 for row in rows[:top_k]:
                     row["experiment_name"] = exp_name
                     row["run"] = run
@@ -321,16 +296,9 @@ def main():
                     row["exp_order"] = exp_idx
                     row["run_order"] = run_order
                     selected.append(row)
-
     if not selected:
         print("No candidates found.")
         return
-
-    # Deterministic playback order:
-    # 1) experiment order from params
-    # 2) run order from params
-    # 3) if generations are requested, generation ascending
-    # 4) fitness rank in requested direction
     if gen_filter:
         if ascending:
             selected.sort(
@@ -355,11 +323,9 @@ def main():
             selected.sort(key=lambda x: (x["exp_order"], x["run_order"], x["metric_value"]))
         else:
             selected.sort(key=lambda x: (x["exp_order"], x["run_order"], -x["metric_value"]))
-
-    # Visualization config (always with graphics, one robot at a time).
     vis_args = SimpleNamespace(
         voxel_types="withbone",
-        out_path=params.get("out_path", "tmp_out"),
+        out_path=params.get("out_path", "experiments/results/tmp"),
         study_name=params.get("study_name", "defaultstudy"),
         experiment_name="viz_replay",
         run=0,
@@ -373,7 +339,6 @@ def main():
         evogym_headless=0,
         evogym_render_mode=args.render_mode or params.get("evogym_render_mode") or "screen",
     )
-
     print(f"Params file: {args.params_file}")
     print(f"Study: {params.get('study_name')}")
     print(f"Experiments: {experiments}")
@@ -390,7 +355,6 @@ def main():
         print("Playback order: experiment -> run -> fitness")
         print(f"top_k per run (all generations): {top_k}")
     print(f"Selected robots total: {len(selected)}")
-
     for rank, entry in enumerate(selected, start=1):
         exp_name = entry["experiment_name"]
         run = entry["run"]
@@ -402,12 +366,10 @@ def main():
         plastic = int(params.get("plastic") or 0)
         max_voxels = int(params.get("max_voxels") or 64)
         cube_face_size = int(params.get("cube_face_size") or 4)
-
         print(
             f"\n[{rank}/{len(selected)}] exp={exp_name} run={run} "
             f"robot_id={rid} fitness_from_db={score:.6f} generation={generation}"
         )
-
         ind = Individual(genome=entry["genome"], id_counter=rid)
         ind.valid = 1
         ind.phenotype = _build_phenotype(
@@ -418,12 +380,10 @@ def main():
             env_conditions=env_conditions,
             plastic=plastic,
         )
-
         vis_args.voxel_types = voxel_types
         prepare_robot_files(ind, vis_args)
         simulate_evogym_batch([ind], vis_args)
         print(f"Replay displacement={ind.displacement:.6f}")
-
 
 if __name__ == "__main__":
     main()

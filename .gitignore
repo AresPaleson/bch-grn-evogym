@@ -1,21 +1,17 @@
-__pycache__
+# Local environments and editor state
+.venv/
+.vscode/
 
-# Ignore venvs created by Docker or manually
-venv/
-outervenv/
+# Python caches
+__pycache__/
+*.py[cod]
 
-# Ignore all workspace output created by Voxcraft / EA runs
-workspace/
-working_data/
+# External dependency copy
+evogym/
 
-# Ignore voxcraft
-voxcraft-sim/
-voxcraft-viz/
+# Temporary experiment output
+experiments/results/tmp/
 
-# etc
-**/__pycache__/
-experiments/analysis/.ipynb_checkpoints/
-.idea/
-
-
-
+# OS noise
+.DS_Store
+Thumbs.db
