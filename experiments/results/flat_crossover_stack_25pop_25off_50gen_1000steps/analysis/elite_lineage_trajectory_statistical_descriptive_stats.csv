@@ -1,0 +1,132 @@
+metric,crossover_type,crossover_label,generation_zero_based,n_runs,mean,std,median,q25,q75,iqr,min,max,ci95_low,ci95_high
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,1,6,0.548922051051039,0.17608630855572732,0.5745512401778168,0.43310583104729355,0.6961715644126591,0.2630657333653656,0.2975985143029381,0.724162277819603,0.36413080308460155,0.7337132990174764
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,2,5,0.3228843299311538,0.2562578072014765,0.3030197809621032,0.2778016650687004,0.315822162293939,0.03802049722523859,0.0,0.7177780413310265,0.004698236470438544,0.641070423391869
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,3,2,0.20053826360191915,0.2836039321605849,0.20053826360191915,0.10026913180095957,0.3008073954028787,0.20053826360191912,0.0,0.4010765272038383,-2.347541971212654,2.7486184984164925
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,4,3,0.395771344813077,0.26736687709278484,0.5180760347456518,0.303601622169621,0.5490934124228204,0.2454917902531994,0.0891272095935902,0.5801107900999891,-0.2684047974710034,1.0599474870971575
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,5,4,0.3523659206607522,0.3111631720604159,0.326839191302651,0.21994349666074692,0.45926161530265625,0.23931811864190933,0.0,0.7557853000377067,-0.14276412297134877,0.8474959642928531
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,6,5,0.26294533593867814,0.37140245441926256,0.0,0.0,0.5285082664011236,0.5285082664011236,0.0,0.7862184132922672,-0.19821172055823555,0.7241023924355918
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,7,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,9,4,0.16437063084160455,0.2928774927041439,0.02777777777777775,0.0,0.19214840861938232,0.19214840861938232,0.0,0.6019269678108627,-0.3016628164370062,0.6304040781202153
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,10,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,12,4,0.11072850793330415,0.22145701586660832,0.0,0.0,0.11072850793330415,0.11072850793330415,0.0,0.4429140317332166,-0.24165902302867887,0.46311603889528713
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,13,4,0.11516058299845137,0.23032116599690278,0.0,0.0,0.11516058299845137,0.11516058299845137,0.0,0.4606423319938055,-0.2513317888793519,0.4816529548762547
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,14,8,0.184994854642073,0.25958038532672206,0.0,0.0,0.4421497054425141,0.4421497054425141,0.0,0.5945233804373226,-0.032019778282310896,0.4020094875664569
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,15,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,16,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,17,3,0.1822471490977342,0.31566132177185613,0.0,0.0,0.2733707236466013,0.2733707236466013,0.0,0.5467414472932026,-0.6018990444861791,0.9663933426816476
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,18,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,19,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,20,2,0.1892765629547161,0.26767748236992445,0.1892765629547161,0.09463828147735805,0.28391484443207415,0.18927656295471612,0.0,0.3785531259094322,-2.215710197756085,2.5942633236655173
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,21,5,0.165565219094309,0.37021508460452107,0.0,0.0,0.0,0.0,0.0,0.827826095471545,-0.29411752305108635,0.6252479612397044
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,22,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,23,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,24,3,0.06499528260217777,0.1125751317192694,0.0,0.0,0.09749292390326665,0.09749292390326665,0.0,0.1949858478065333,-0.21465684751743716,0.34464741272179267
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,25,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,26,4,0.19528662393414403,0.27631885209917484,0.09749292390326665,0.0,0.29277954783741067,0.29277954783741067,0.0,0.5861606479300429,-0.2443983310375598,0.6349715789058479
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,27,7,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,28,4,0.050151021713140426,0.10030204342628087,0.0,0.0,0.050151021713140426,0.050151021713140426,0.0,0.2006040868525617,-0.1094519120440742,0.20975395547035505
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,29,7,0.065110379269905,0.1722658713172639,0.0,0.0,0.0,0.0,0.0,0.455772654889335,-0.09420897924494574,0.22442973778475572
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,30,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,31,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,32,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,33,3,0.14516576549290952,0.2514344813533482,0.0,0.0,0.2177486482393643,0.2177486482393643,0.0,0.4354972964787286,-0.4794321116948177,0.7697636426806367
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,34,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,35,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,36,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,37,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,38,2,0.234298178600131,0.3313476618156189,0.234298178600131,0.1171490893000655,0.3514472679001965,0.23429817860013097,0.0,0.468596357200262,-2.742742448066266,3.211338805266528
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,39,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,40,3,0.08254176726922786,0.14296653465682846,0.0,0.0,0.1238126509038418,0.1238126509038418,0.0,0.2476253018076836,-0.27260679300341656,0.43769032754187226
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,41,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,42,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,43,2,0.1833161184435406,0.25924814090444775,0.1833161184435406,0.0916580592217703,0.2749741776653109,0.18331611844354062,0.0,0.3666322368870812,-2.145936013988121,2.5125682508752027
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,44,2,0.23596779836098455,0.33370886072542416,0.23596779836098455,0.11798389918049228,0.3539516975414768,0.23596779836098453,0.0,0.4719355967219691,-2.7622873588188113,3.23422295554078
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,45,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,46,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,47,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,48,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,arithmetic_recombination,arithmetic recombination,49,3,0.08558436165330437,0.1482364627168727,0.0,0.0,0.12837654247995656,0.12837654247995656,0.0,0.2567530849599131,-0.28265542565199964,0.45382414895860834
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,1,5,0.5152551972018141,0.2026780499305733,0.4841310499438951,0.38139607098522,0.505988949814461,0.12459287882924097,0.3472728444629077,0.8574870708025867,0.26359715937687583,0.7669132350267525
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,2,4,0.29337224514028837,0.20333100571790763,0.36034936567397086,0.23854291989392445,0.4151786909203347,0.17663577102641026,0.0,0.4527902492132116,-0.030172758808055866,0.6169172490886325
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,3,3,0.3555892552740935,0.3598195484990606,0.3472728444629077,0.17363642223145384,0.5333838829111403,0.35974746067968644,0.0,0.7194949213593728,-0.5382520546110152,1.2494305651592021
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,4,1,0.6579594841566121,,0.6579594841566121,0.6579594841566121,0.6579594841566121,0.0,0.6579594841566121,0.6579594841566121,,
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,5,4,0.3748063192350731,0.17009089167245034,0.35164823857677474,0.26357865267504543,0.46287590513680243,0.199297252461757,0.2038570507805291,0.5920717490062141,0.10415375435232543,0.6454588841178208
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,6,5,0.5647149838022626,0.39606288726694944,0.4764658595256588,0.4582884950238242,0.920865803013932,0.46257730799010777,0.0,0.9679547614478982,0.07293795565825456,1.0564920119462706
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,7,5,0.2986365693435144,0.5241723577992258,0.111111111111111,0.0,0.1536631734485384,0.1536631734485384,0.0,1.2284085621579228,-0.3522093761893675,0.9494825148763963
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,8,8,0.30958754218471574,0.2514925663455054,0.2843778427870344,0.14202199390862108,0.49690579589644207,0.354883801987821,0.0,0.7043707802139072,0.09933449513731729,0.5198405892321142
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,9,3,0.29732199856692143,0.2653107245022036,0.382033780403936,0.191016890201968,0.44598299785038215,0.25496610764841415,0.0,0.5099322152968283,-0.3617463775255909,0.9563903746594338
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,10,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,11,6,0.19516922371993628,0.2801044714752403,0.11135515776466605,0.0,0.22636134339158556,0.22636134339158556,0.0,0.7207266741112821,-0.09878239165229408,0.48912083909216664
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,12,5,0.13955343571960835,0.19252375243017825,0.0,0.0,0.3157333981941058,0.3157333981941058,0.0,0.382033780403936,-0.09949637647203885,0.37860324791125555
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,13,2,0.25946585683707507,0.36694013371174744,0.25946585683707507,0.12973292841853754,0.3891987852556126,0.259465856837075,0.0,0.5189317136741501,-3.03736044224858,3.5562921559227303
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,14,6,0.17357880133150508,0.14632900197149518,0.2060364870370801,0.04734066463620702,0.25689286346892354,0.20955219883271653,0.0,0.3611127877994164,0.020015931453758573,0.3271416712092516
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,15,4,0.04760180112753415,0.0952036022550683,0.0,0.0,0.04760180112753415,0.04760180112753415,0.0,0.1904072045101366,-0.10388837499566317,0.19909197725073147
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,16,3,0.311416366859109,0.13089724838057326,0.2421610524189263,0.235928519778725,0.35227655671940167,0.11634803694067666,0.2296959871385237,0.462392061019877,-0.013750424219651614,0.6365831579378696
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,17,6,0.16716407111074041,0.19510142805649566,0.12108052620946315,0.0,0.2930346550591385,0.2930346550591385,0.0,0.4508308516396404,-0.03758232096427985,0.3719104631857607
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,18,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,19,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,20,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,21,4,0.046071176496035975,0.09214235299207195,0.0,0.0,0.046071176496035975,0.046071176496035975,0.0,0.1842847059841439,-0.10054786892387288,0.19269022191594484
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,22,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,23,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,24,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,25,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,26,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,27,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,28,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,29,2,0.06599816439337974,0.09333549917684673,0.06599816439337974,0.03299908219668987,0.09899724659006962,0.06599816439337974,0.0,0.1319963287867595,-0.772588024617606,0.9045843534043656
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,30,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,31,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,32,3,0.0776437473873427,0.13448291536492082,0.0,0.0,0.11646562108101405,0.11646562108101405,0.0,0.2329312421620281,-0.25643033426934875,0.41171782904403414
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,33,4,0.02452051827037925,0.04904103654075849,0.0,0.0,0.02452051827037925,0.02452051827037925,0.0,0.098082073081517,-0.05351471450284444,0.10255575104360294
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,35,3,0.15396226413132538,0.26667046392379495,0.0,0.0,0.2309433961969881,0.2309433961969881,0.0,0.4618867923939762,-0.5084838919366426,0.8164084201992934
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,36,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,37,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,38,2,0.0466327504828545,0.06594866818361333,0.0466327504828545,0.02331637524142725,0.06994912572428175,0.04663275048285449,0.0,0.093265500965709,-0.5458925245752474,0.6391580255409565
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,39,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,40,2,0.0625,0.08838834764831845,0.0625,0.03125,0.09375,0.0625,0.0,0.125,-0.731637796027006,0.856637796027006
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,41,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,42,3,0.048734242372853266,0.0844101838581579,0.0,0.0,0.0731013635592799,0.0731013635592799,0.0,0.1462027271185598,-0.1609522786128616,0.2584207633585681
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,43,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,44,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,45,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,47,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,homologous recombination,48,2,0.1123192202834256,0.1588433646399917,0.1123192202834256,0.0561596101417128,0.1684788304251384,0.11231922028342559,0.0,0.2246384405668512,-1.3148317884741967,1.5394702290410478
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,1,5,0.6765069028039048,0.5263875935541544,0.5504817018975018,0.4229877667186733,1.1242281302693369,0.7012403635506637,0.0,1.2848369151340118,0.0229103787865943,1.3301034268212153
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,2,5,0.4339352377226067,0.4250626299051485,0.5049283620427176,0.0,0.7238230122664102,0.7238230122664102,0.0,0.9409248143039056,-0.09384972681242781,0.9617202022576412
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,3,4,0.6406381704700047,0.5507445374861748,0.6776012000925279,0.28593866699045234,1.0323007035720804,0.746362036581628,0.0,1.2073502816949633,-0.23571928876917891,1.5169956297091884
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,4,2,0.6889823157930559,0.0493626357046785,0.6889823157930559,0.6715299885710462,0.7064346430150656,0.03490465444401947,0.6540776613490366,0.7238869702370753,0.2454766301729316,1.1324880014131802
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,6,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,7,3,0.3719131205014632,0.322292322570498,0.5463451726484168,0.2731725863242084,0.5578696807521948,0.2846970944279864,0.0,0.5693941888559727,-0.42870539223362236,1.1725316332365487
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,8,1,0.2657916423324117,,0.2657916423324117,0.2657916423324117,0.2657916423324117,0.0,0.2657916423324117,0.2657916423324117,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,9,1,0.597825733284619,,0.597825733284619,0.597825733284619,0.597825733284619,0.0,0.597825733284619,0.597825733284619,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,10,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,11,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,12,2,0.11553685746158565,0.16339379077614155,0.11553685746158565,0.057768428730792826,0.17330528619237848,0.11553685746158565,0.0,0.2310737149231713,-1.3524981080492937,1.583571822972465
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,14,2,0.1910606860052553,0.27020061338493945,0.1910606860052553,0.09553034300262765,0.28659102900788297,0.19106068600525533,0.0,0.3821213720105106,-2.2365955074606845,2.6187168794711955
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,16,2,0.16412957659335195,0.23211427320487202,0.16412957659335195,0.08206478829667598,0.24619436489002794,0.16412957659335198,0.0,0.3282591531867039,-1.921334426905691,2.249593580092395
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,17,2,0.1359845884195095,0.19231124921659365,0.1359845884195095,0.06799229420975475,0.20397688262926425,0.1359845884195095,0.0,0.271969176839019,-1.5918634330382309,1.8638326098772497
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,18,1,0.546319051629027,,0.546319051629027,0.546319051629027,0.546319051629027,0.0,0.546319051629027,0.546319051629027,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,19,1,0.225269987227275,,0.225269987227275,0.225269987227275,0.225269987227275,0.0,0.225269987227275,0.225269987227275,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,20,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,21,3,0.20465827383775917,0.3544785284763432,0.0,0.0,0.30698741075663877,0.30698741075663877,0.0,0.6139748215132775,-0.6759152067892046,1.085231754464723
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,22,3,0.20465827383775917,0.3544785284763432,0.0,0.0,0.30698741075663877,0.30698741075663877,0.0,0.6139748215132775,-0.6759152067892046,1.085231754464723
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,24,1,0.1363772172172132,,0.1363772172172132,0.1363772172172132,0.1363772172172132,0.0,0.1363772172172132,0.1363772172172132,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,25,1,0.6139748215132775,,0.6139748215132775,0.6139748215132775,0.6139748215132775,0.0,0.6139748215132775,0.6139748215132775,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,26,1,0.3894772537377996,,0.3894772537377996,0.3894772537377996,0.3894772537377996,0.0,0.3894772537377996,0.3894772537377996,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,27,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,29,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,31,2,0.30615810682903344,0.07073764811654171,0.30615810682903344,0.2811485714948362,0.3311676421632307,0.050019070668394505,0.256139036160639,0.3561771774974279,-0.3293944458096518,0.9417106594677187
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,32,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,33,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,36,2,0.09290630905667625,0.13138936229797787,0.09290630905667625,0.04645315452833813,0.1393594635850144,0.09290630905667627,0.0,0.1858126181133525,-1.0875802751236876,1.27339289323704
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,37,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,38,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,39,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,40,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,43,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,44,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,45,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,46,3,0.10396387350820276,0.1800707110678712,0.0,0.0,0.15594581026230414,0.15594581026230414,0.0,0.3118916205246083,-0.34335657065401637,0.5512843176704219
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,47,1,0.0,,0.0,0.0,0.0,0.0,0.0,0.0,,
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,cut and splice,49,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

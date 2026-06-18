@@ -1,0 +1,50 @@
+selected_test,n_total,group_count,statistic,p_value,effect_size_name,effect_size,assumptions_supported_parametric,levene_p_value,decision,note,metric,generation_zero_based
+one_way_anova,16,3,0.33360727444958493,0.722290182043682,eta_squared,0.04881861966181772,True,0.08969602364054667,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,1
+one_way_anova,14,3,0.2552741938637562,0.7791690381094227,eta_squared,0.0443548274617269,True,0.25751684044318823,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,2
+one_way_anova,9,3,0.7120570767845006,0.5278613062810438,eta_squared,0.19182277159415512,True,0.24397098468269482,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,3
+welch_t_test,5,2,-1.8526999884160442,0.19355505105980028,hedges_g,-0.9686030695480933,True,0.5102552846510355,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,4
+welch_t_test,8,2,-0.1265612164438441,0.9045806019067784,hedges_g,-0.07781938641970483,True,0.5211425706768773,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,5
+mann_whitney_u,10,2,7.5,0.33211197790172275,cliffs_delta,-0.4,False,0.9111500892708275,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,6
+mann_whitney_u,8,2,6.0,0.7599815271577279,cliffs_delta,-0.2,False,0.7895649341830974,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,7
+not_tested,8,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,8
+mann_whitney_u,7,2,5.0,0.8544450676295319,cliffs_delta,-0.16666666666666666,False,0.9772327317304231,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,9
+not_tested,2,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,10
+not_tested,6,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,11
+kruskal_wallis,11,3,0.05487804878048555,0.972934005989063,epsilon_squared,0.0,False,0.9726909072324162,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,12
+mann_whitney_u,6,2,2.5,0.583882420770365,cliffs_delta,-0.375,False,0.45049410876396545,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,13
+kruskal_wallis,16,3,0.007864932885906993,0.996075255577697,epsilon_squared,0.0,False,0.7646134141366564,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,14
+mann_whitney_u,6,2,3.0,0.7236736098317631,cliffs_delta,-0.25,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,15
+one_way_anova,7,3,2.6572883446493174,0.1844139360077091,eta_squared,0.5705655626201956,True,0.4170904112499991,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,16
+kruskal_wallis,11,3,0.018018018018018528,0.9910314505214002,epsilon_squared,0.0,False,0.9568828774892503,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,17
+not_tested_no_between_group_variation,9,2,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,18
+not_tested_no_between_group_variation,5,2,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,19
+mann_whitney_u,6,2,6.0,0.2888443663464849,cliffs_delta,0.5,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,20
+kruskal_wallis,12,3,0.13915662650603125,0.9327870809334269,epsilon_squared,0.0,False,0.763999331117326,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,21
+kruskal_wallis,10,3,2.3333333333333477,0.31140322391459535,epsilon_squared,0.04761904761904967,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,22
+not_tested_no_between_group_variation,6,2,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,23
+not_tested,3,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,24
+not_tested,5,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,25
+welch_t_test,8,2,1.4134875159661768,0.25240771466322226,hedges_g,0.8691187892714887,True,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,26
+not_tested_no_between_group_variation,13,3,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,27
+mann_whitney_u,7,2,7.5,0.5637028616507731,cliffs_delta,0.25,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,28
+kruskal_wallis,11,3,1.3285714285714305,0.5146409971641759,epsilon_squared,0.0,False,0.9946543333865263,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,29
+not_tested_no_between_group_variation,7,2,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,30
+kruskal_wallis,10,3,8.88888888888888,0.011743628457021411,epsilon_squared,0.984126984126983,False,,significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,31
+not_tested,3,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,32
+mann_whitney_u,7,2,7.0,0.8254979107046321,cliffs_delta,0.16666666666666666,False,0.37834056180243614,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,33
+not_tested,2,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,34
+mann_whitney_u,6,2,3.0,0.5049850750938458,cliffs_delta,-0.3333333333333333,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,35
+kruskal_wallis,11,3,4.5,0.10539922456186435,epsilon_squared,0.3125,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,36
+not_tested_no_between_group_variation,9,3,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,37
+kruskal_wallis,7,3,1.833333333333331,0.3998496543448478,epsilon_squared,0.0,False,0.0,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,38
+not_tested,4,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,39
+kruskal_wallis,7,3,0.9444444444444453,0.623614916426173,epsilon_squared,0.0,False,0.8628183212736087,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,40
+not_tested_no_between_group_variation,6,2,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,41
+not_tested,3,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,42
+not_tested,2,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,43
+mann_whitney_u,4,2,3.0,0.6170750774519738,cliffs_delta,0.5,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,44
+not_tested,2,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,45
+mann_whitney_u,6,2,3.0,0.5049850750938458,cliffs_delta,-0.3333333333333333,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,46
+not_tested_no_between_group_variation,5,2,0.0,1.0,none,0.0,False,,not_significant,Independent unit is one run-level trajectory value at this generation. All tested values were identical.,elite_lineage_parent_child_distance,47
+not_tested,2,1,,,,,False,,not_tested,At least two crossover groups with two or more runs are required.,elite_lineage_parent_child_distance,48
+mann_whitney_u,6,2,6.0,0.5049850750938458,cliffs_delta,0.3333333333333333,False,,not_significant,Independent unit is one run-level trajectory value at this generation.,elite_lineage_parent_child_distance,49

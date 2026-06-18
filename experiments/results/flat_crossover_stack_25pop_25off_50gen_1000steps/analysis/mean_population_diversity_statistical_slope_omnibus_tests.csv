@@ -1,0 +1,2 @@
+selected_test,n_total,group_count,statistic,p_value,effect_size_name,effect_size,assumptions_supported_parametric,levene_p_value,decision,note,metric,response_column
+kruskal_wallis,30,3,4.136774193548391,0.1263894713811118,epsilon_squared,0.07913978494623669,False,0.0319028422728729,not_significant,Independent unit is one per-run linear slope over generation_zero_based.,mean_pairwise_morphological_distance,slope_per_generation

@@ -1,0 +1,4 @@
+metric,crossover_type,n_runs,mean_slope,median_slope,normality_p_value,selected_test,statistic,p_value,effect_size_name,effect_size,decision,direction
+mean_pairwise_morphological_distance,arithmetic_recombination,10,-0.0045570879418506075,-0.0046613958206276115,0.6998195805277437,one_sample_t_test,-14.24710255398342,1.7629049728578267e-07,cohens_d,-4.505329412858964,significant,decreasing
+mean_pairwise_morphological_distance,homologous_gene_block_recombination,10,-0.005630464342262815,-0.005365468242345656,0.6118974737942359,one_sample_t_test,-19.47084049151835,1.1500517366539588e-08,cohens_d,-6.1572203911030385,significant,decreasing
+mean_pairwise_morphological_distance,promoter_aligned_cut_and_splice,10,-0.004440500010241576,-0.0047383783296117265,0.8766264244316996,one_sample_t_test,-7.357486640535107,4.292937275265141e-05,cohens_d,-2.326641563835147,significant,decreasing

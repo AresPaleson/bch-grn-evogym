@@ -1,0 +1,4 @@
+metric,crossover_type,n_runs,mean_slope,median_slope,normality_p_value,selected_test,statistic,p_value,effect_size_name,effect_size,decision,direction
+elite_lineage_parent_child_distance,arithmetic_recombination,10,-0.009503617246319675,-0.01046240263479813,0.816665098764102,one_sample_t_test,-5.753150918451891,0.0002752021947615812,cohens_d,-1.819306062499761,significant,decreasing
+elite_lineage_parent_child_distance,homologous_gene_block_recombination,10,-0.010771366065278282,-0.009316712699730785,0.7128079800105532,one_sample_t_test,-5.854214606056905,0.00024248213613359634,cohens_d,-1.851265206656518,significant,decreasing
+elite_lineage_parent_child_distance,promoter_aligned_cut_and_splice,10,-0.02109378808417634,-0.013372673377008948,2.6518844935135217e-05,wilcoxon_signed_rank,2.0,0.005859375,rank_biserial,-0.9272727272727272,significant,decreasing

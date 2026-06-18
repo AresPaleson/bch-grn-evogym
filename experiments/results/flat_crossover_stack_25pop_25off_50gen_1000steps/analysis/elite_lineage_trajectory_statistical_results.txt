@@ -1,0 +1,84 @@
+Elite Lineage Trajectory Statistical Results
+============================================
+
+Alpha: 0.05
+Metric: elite_lineage_parent_child_distance
+Independent unit: one run-level value per generation, or one run-level slope/change.
+
+Run-Level Slope Summary
+-----------------------
+                     crossover_type  n_runs      mean      std    median      q25       q75 ci95_low ci95_high
+           arithmetic_recombination      10 -0.009504 0.005224  -0.01046 -0.01218 -0.007552 -0.01324 -0.005767
+homologous_gene_block_recombination      10  -0.01077 0.005818 -0.009317 -0.01491 -0.006379 -0.01493 -0.006609
+    promoter_aligned_cut_and_splice      10  -0.02109  0.03289  -0.01337 -0.01815 -0.006876 -0.04462  0.002433
+
+Slope Assumption Tests
+----------------------
+         test                      crossover_type  n_runs statistic   p_value
+ shapiro_wilk            arithmetic_recombination      10    0.9627    0.8167
+ shapiro_wilk homologous_gene_block_recombination      10    0.9537    0.7128
+ shapiro_wilk     promoter_aligned_cut_and_splice      10    0.5732 2.652e-05
+levene_median                                 all      30      1.42    0.2593
+
+Between-Crossover Slope Test
+----------------------------
+ selected_test  n_total  group_count statistic p_value effect_size_name effect_size        decision
+kruskal_wallis       30            3    0.8852  0.6424  epsilon_squared           0 not_significant
+
+Between-Crossover Slope Pairwise Tests
+--------------------------------------
+          test                             group_a                             group_b  n_a  n_b mean_difference_a_minus_b p_value_raw p_value_holm effect_size_name effect_size   decision_holm
+mann_whitney_u            arithmetic_recombination homologous_gene_block_recombination   10   10                  0.001268      0.9698            1     cliffs_delta        0.02 not_significant
+mann_whitney_u            arithmetic_recombination     promoter_aligned_cut_and_splice   10   10                   0.01159      0.3447            1     cliffs_delta        0.26 not_significant
+mann_whitney_u homologous_gene_block_recombination     promoter_aligned_cut_and_splice   10   10                   0.01032      0.5708            1     cliffs_delta        0.16 not_significant
+
+Slope-vs-Zero Tests
+-------------------
+                     crossover_type  n_runs mean_slope        selected_test statistic   p_value effect_size_name effect_size    decision  direction
+           arithmetic_recombination      10  -0.009504    one_sample_t_test    -5.753 0.0002752         cohens_d      -1.819 significant decreasing
+homologous_gene_block_recombination      10   -0.01077    one_sample_t_test    -5.854 0.0002425         cohens_d      -1.851 significant decreasing
+    promoter_aligned_cut_and_splice      10   -0.02109 wilcoxon_signed_rank         2  0.005859    rank_biserial     -0.9273 significant decreasing
+
+First-vs-Last Generation Tests
+------------------------------
+                     crossover_type  n_runs  first_generation_min  last_generation_max first_mean last_mean mean_change_last_minus_first percent_change_from_first selected_test  p_value effect_size_name effect_size        decision direction
+           arithmetic_recombination      10                     1                   49     0.4253    0.1092                      -0.3161                    -74.33 paired_t_test 0.006377        cohens_dz      -1.117     significant decreased
+homologous_gene_block_recombination      10                     1                   48     0.4718   0.03496                      -0.4368                    -92.59 paired_t_test  0.00129        cohens_dz      -1.455     significant decreased
+    promoter_aligned_cut_and_splice      10                     1                   49     0.4611   0.09059                      -0.3705                    -80.35 paired_t_test  0.05004        cohens_dz     -0.7152 not_significant decreased
+
+Significant Generation-Level Omnibus Tests
+------------------------------------------
+ generation_zero_based  selected_test  n_total statistic p_value effect_size_name effect_size    decision
+                    31 kruskal_wallis       10     8.889 0.01174  epsilon_squared      0.9841 significant
+
+Significant Generation-Level Pairwise Tests
+-------------------------------------------
+No significant Holm-corrected generation-level pairwise tests.
+
+Generation-Level Descriptives Preview
+-------------------------------------
+          crossover_type  generation_zero_based  n_runs   mean    std  median     q25     q75
+arithmetic_recombination                      1       6 0.5489 0.1761  0.5746  0.4331  0.6962
+arithmetic_recombination                      2       5 0.3229 0.2563   0.303  0.2778  0.3158
+arithmetic_recombination                      3       2 0.2005 0.2836  0.2005  0.1003  0.3008
+arithmetic_recombination                      4       3 0.3958 0.2674  0.5181  0.3036  0.5491
+arithmetic_recombination                      5       4 0.3524 0.3112  0.3268  0.2199  0.4593
+arithmetic_recombination                      6       5 0.2629 0.3714       0       0  0.5285
+arithmetic_recombination                      7       1      0     NA       0       0       0
+arithmetic_recombination                      9       4 0.1644 0.2929 0.02778       0  0.1921
+arithmetic_recombination                     10       1      0     NA       0       0       0
+arithmetic_recombination                     12       4 0.1107 0.2215       0       0  0.1107
+arithmetic_recombination                     13       4 0.1152 0.2303       0       0  0.1152
+arithmetic_recombination                     14       8  0.185 0.2596       0       0  0.4421
+arithmetic_recombination                     15       2      0      0       0       0       0
+arithmetic_recombination                     16       2      0      0       0       0       0
+arithmetic_recombination                     17       3 0.1822 0.3157       0       0  0.2734
+arithmetic_recombination                     18       4      0      0       0       0       0
+arithmetic_recombination                     19       2      0      0       0       0       0
+arithmetic_recombination                     20       2 0.1893 0.2677  0.1893 0.09464  0.2839
+arithmetic_recombination                     21       5 0.1656 0.3702       0       0       0
+arithmetic_recombination                     22       5      0      0       0       0       0
+arithmetic_recombination                     23       2      0      0       0       0       0
+arithmetic_recombination                     24       3  0.065 0.1126       0       0 0.09749
+arithmetic_recombination                     25       1      0     NA       0       0       0
+arithmetic_recombination                     26       4 0.1953 0.2763 0.09749       0  0.2928
