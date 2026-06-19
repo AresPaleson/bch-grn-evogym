@@ -1,6 +1,6 @@
 # EvoGym GRN Bachelor Thesis Repository
 
-This repository contains the code and experiment material for the bachelor thesis on
+This repository contains the code and experiment material for the bachelor project on
 GRN-developed EvoGym robots and evolutionary crossover operators.
 
 ## Repository Layout
@@ -11,8 +11,7 @@ GRN-developed EvoGym robots and evolutionary crossover operators.
 - `run_scripts/` - main runnable experiment entry points.
 - `experiments/analysis/` - analysis, plotting, consolidation, and statistical-test scripts.
 - `experiments/results/final2/` - final thesis experiment outputs and analysis artifacts.
-- `experiments/results/tmp/` - optional location for smoke tests, verification outputs, and temporary generated worlds.
-- `evogym/` - external EvoGym source dependency; keep untouched unless intentionally updating EvoGym itself.
+- `evogym/` - external EvoGym source dependency; 
 
 ## Dependencies
 
@@ -49,14 +48,6 @@ On Windows PowerShell:
 py -3.9 -m venv --system-site-packages .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-```
-
-## Common Entry Points
-
-Run the main crossover-stack script:
-
-```bash
-python run_scripts/run_ea.py
 ```
 
 Run or render a small smoke experiment:
