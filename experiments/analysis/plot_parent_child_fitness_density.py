@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.ticker import FormatStrFormatter
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(ROOT))
@@ -40,6 +41,13 @@ COLORS = {
     "grid": "#D9DDE3",
     "gray": "#9AA3AD",
 }
+BASE_FONT_SIZE = 34
+AXIS_TITLE_FONT_SIZE = 36
+AXIS_LABEL_FONT_SIZE = 34
+TICK_FONT_SIZE = 31
+LEGEND_FONT_SIZE = 31
+FIGURE_TITLE_FONT_SIZE = 42
+PANEL_LABEL_FONT_SIZE = 42
 MIN_RELEVANT_DISPLACEMENT = -5.0
 
 DENSITY_CMAP = LinearSegmentedColormap.from_list(
@@ -158,6 +166,11 @@ def parse_args():
     parser.add_argument("--env-conditions", default="", type=str)
     parser.add_argument("--plastic", default=0, type=int)
     parser.add_argument("--fitness-metric", default="displacement", type=str)
+    parser.add_argument(
+        "--output-name",
+        default="parent_child_fitness_distance_density_by_crossover.png",
+        type=str,
+    )
     return parser.parse_args()
 
 
@@ -550,12 +563,12 @@ def style():
             "grid.alpha": 0.45,
             "font.family": "serif",
             "font.serif": ["Times New Roman", "DejaVu Serif", "Times", "serif"],
-            "font.size": 16,
-            "axes.titlesize": 19,
-            "axes.labelsize": 17,
-            "xtick.labelsize": 15,
-            "ytick.labelsize": 15,
-            "legend.fontsize": 15,
+            "font.size": BASE_FONT_SIZE,
+            "axes.titlesize": AXIS_TITLE_FONT_SIZE,
+            "axes.labelsize": AXIS_LABEL_FONT_SIZE,
+            "xtick.labelsize": TICK_FONT_SIZE,
+            "ytick.labelsize": TICK_FONT_SIZE,
+            "legend.fontsize": LEGEND_FONT_SIZE,
             "savefig.facecolor": COLORS["bg"],
             "savefig.dpi": 300,
         }
@@ -578,6 +591,10 @@ def plot_regression(ax, df, x_col, y_col):
     x_vals = np.linspace(fit_df[x_col].min(), fit_df[x_col].max(), 200)
     y_vals = slope * x_vals + intercept
     ax.plot(x_vals, y_vals, color=COLORS["red"], linewidth=2.3)
+
+
+def density_axis_title(title: str, stats: str) -> str:
+    return f"{title}\n{stats}"
 
 
 def clean_plot_frame(df, x_col, y_col):
@@ -634,9 +651,9 @@ def plot_density_axis(
     ylim=None,
     show_colorbar=True,
     xlabel="Euclidean distance",
-    title_fontsize=12,
-    label_fontsize=11,
-    tick_fontsize=10,
+    title_fontsize=AXIS_TITLE_FONT_SIZE,
+    label_fontsize=AXIS_LABEL_FONT_SIZE,
+    tick_fontsize=TICK_FONT_SIZE,
     density_cmap=DENSITY_CMAP,
 ):
     plot_df = clip_plot_frame(
@@ -657,7 +674,7 @@ def plot_density_axis(
     ax.tick_params(labelsize=tick_fontsize)
 
     if plot_df.empty:
-        ax.set_title(f"{title} (Corr: NA, n=0)", fontsize=title_fontsize)
+        ax.set_title(density_axis_title(title, "Corr: NA, n=0"), fontsize=title_fontsize)
         ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, color=COLORS["gray"])
         return
 
@@ -687,13 +704,17 @@ def plot_density_axis(
         if show_colorbar:
             cbar = plt.colorbar(mesh, ax=ax, shrink=0.94, pad=0.02)
             cbar.set_label("Relative density", fontsize=label_fontsize)
-            cbar.ax.tick_params(labelsize=tick_fontsize)
+            cbar.set_ticks([])
+            cbar.ax.tick_params(length=0)
 
     plot_regression(ax, plot_df, x_col, y_col)
 
     corr = plot_df[x_col].corr(plot_df[y_col])
     corr_text = f"{corr:.2f}" if pd.notna(corr) else "NA"
-    ax.set_title(f"{title} (Corr: {corr_text}, n={len(plot_df)})", fontsize=title_fontsize)
+    ax.set_title(
+        density_axis_title(title, f"Corr: {corr_text}, n={len(plot_df)}"),
+        fontsize=title_fontsize,
+    )
     ax.set_xlim(*xlim)
     if ylim is not None:
         ax.set_ylim(*ylim)
@@ -710,7 +731,7 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
     fig, axes = plt.subplots(
         nrows=3,
         ncols=len(CROSSOVER_TYPES),
-        figsize=(21.6, 14.2),
+        figsize=(27.0, 18.0),
         sharex=True,
     )
 
@@ -731,9 +752,9 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             f"Child {y_label}",
             ylim=(0, 100),
             xlabel="",
-            title_fontsize=18,
-            label_fontsize=17,
-            tick_fontsize=15,
+            title_fontsize=AXIS_TITLE_FONT_SIZE + 3,
+            label_fontsize=AXIS_LABEL_FONT_SIZE,
+            tick_fontsize=TICK_FONT_SIZE,
             density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
         )
         plot_density_axis(
@@ -745,9 +766,9 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             f"Child {y_label}",
             ylim=(0, 100),
             xlabel="",
-            title_fontsize=18,
-            label_fontsize=17,
-            tick_fontsize=15,
+            title_fontsize=AXIS_TITLE_FONT_SIZE,
+            label_fontsize=AXIS_LABEL_FONT_SIZE,
+            tick_fontsize=TICK_FONT_SIZE,
             density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
         )
         plot_density_axis(
@@ -759,9 +780,9 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             f"Child - Parent {y_label}",
             ylim=(-90, 40),
             xlabel="",
-            title_fontsize=18,
-            label_fontsize=17,
-            tick_fontsize=15,
+            title_fontsize=AXIS_TITLE_FONT_SIZE,
+            label_fontsize=AXIS_LABEL_FONT_SIZE,
+            tick_fontsize=TICK_FONT_SIZE,
             density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
         )
 
@@ -771,11 +792,16 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
 
     fig.suptitle(
         "Parent-Child Fitness-Distance Density by Crossover Type",
-        fontsize=24,
-        y=0.995,
+        fontsize=FIGURE_TITLE_FONT_SIZE,
+        y=0.95,
     )
-    fig.supxlabel("Euclidean distance", fontsize=20, color=COLORS["ink"], y=0.018)
-    fig.tight_layout(rect=(0, 0.03, 1, 0.98))
+    fig.supxlabel(
+        "Euclidean distance",
+        fontsize=AXIS_LABEL_FONT_SIZE,
+        color=COLORS["ink"],
+        y=0.055,
+    )
+    fig.tight_layout(rect=(0, 0.075, 1, 0.925), h_pad=1.8, w_pad=2.2)
     fig.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
@@ -913,10 +939,13 @@ def plot_distance_by_crossover(links_df, output_path):
     fig, ax = plt.subplots(figsize=(9.8, 5.3))
     clean_axes(ax)
     ax.grid(True, axis="y")
-    ax.set_ylabel("Normalized morphological distance", fontsize=15)
-    ax.set_xlabel("Variation operator", fontsize=15)
-    ax.set_title("Closest Parent-Child Morphological Distance by Operator", fontsize=17)
-    ax.tick_params(labelsize=13)
+    ax.set_ylabel("Normalized morphological distance", fontsize=AXIS_LABEL_FONT_SIZE)
+    ax.set_xlabel("Variation operator", fontsize=AXIS_LABEL_FONT_SIZE)
+    ax.set_title(
+        "Closest Parent-Child Morphological Distance by Operator",
+        fontsize=AXIS_TITLE_FONT_SIZE,
+    )
+    ax.tick_params(labelsize=TICK_FONT_SIZE)
 
     if closest_df.empty:
         ax.text(0.5, 0.5, "No parent-child links", ha="center", va="center", transform=ax.transAxes)
@@ -997,10 +1026,13 @@ def plot_distance_by_generation(summary_path, output_path):
     fig, ax = plt.subplots(figsize=(9.8, 5.3))
     clean_axes(ax)
     ax.grid(True)
-    ax.set_xlabel("Child generation", fontsize=15)
-    ax.set_ylabel("Mean normalized morphological distance", fontsize=15)
-    ax.set_title("Closest Parent-Child Morphological Distance Over Generations", fontsize=17)
-    ax.tick_params(labelsize=13)
+    ax.set_xlabel("Child generation", fontsize=AXIS_LABEL_FONT_SIZE)
+    ax.set_ylabel("Mean normalized morphological distance", fontsize=AXIS_LABEL_FONT_SIZE)
+    ax.set_title(
+        "Closest Parent-Child Morphological Distance Over Generations",
+        fontsize=AXIS_TITLE_FONT_SIZE,
+    )
+    ax.tick_params(labelsize=TICK_FONT_SIZE)
 
     if summary_df.empty:
         ax.text(0.5, 0.5, "No generation summary", ha="center", va="center", transform=ax.transAxes)
@@ -1035,13 +1067,17 @@ def plot_distance_by_generation(summary_path, output_path):
             )
 
     ax.set_ylim(0, 1)
-    ax.legend(frameon=False, loc="best", fontsize=13)
+    ax.legend(frameon=False, loc="best", fontsize=LEGEND_FONT_SIZE)
     fig.tight_layout()
     fig.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 
-def regenerate_plots_from_links(analysis_dir: Path, fitness_metric: str):
+def regenerate_plots_from_links(
+    analysis_dir: Path,
+    fitness_metric: str,
+    output_name: str = "parent_child_fitness_distance_density_by_crossover.png",
+):
     links_path = analysis_dir / "parent_child_fitness_distance_links.csv"
     if not links_path.exists():
         raise FileNotFoundError(f"Missing parent-child link CSV: {links_path}")
@@ -1050,7 +1086,7 @@ def regenerate_plots_from_links(analysis_dir: Path, fitness_metric: str):
     if "fitness_metric" in links_df.columns and links_df["fitness_metric"].notna().any():
         fitness_metric = links_df["fitness_metric"].dropna().iloc[0]
 
-    crossover_grid_path = analysis_dir / "parent_child_fitness_distance_density_by_crossover.png"
+    crossover_grid_path = analysis_dir / output_name
     crossover_distance_path = analysis_dir / "parent_child_morphology_distance_by_crossover.png"
     generation_distance_path = analysis_dir / "parent_child_morphology_distance_by_generation.png"
 
@@ -1085,6 +1121,7 @@ def run_density_plot(
     env_conditions: str = "",
     plastic: int = 0,
     fitness_metric: str = "displacement",
+    output_name: str = "parent_child_fitness_distance_density_by_crossover.png",
 ):
     style()
 
@@ -1098,7 +1135,7 @@ def run_density_plot(
 
     if DB_DEPENDENCY_ERROR is not None:
         if links_path.exists():
-            return regenerate_plots_from_links(analysis_dir, fitness_metric)
+            return regenerate_plots_from_links(analysis_dir, fitness_metric, output_name)
         raise RuntimeError(
             "Database dependencies are unavailable and no existing parent-child "
             f"link CSV was found. Original import error: {DB_DEPENDENCY_ERROR}"
@@ -1126,7 +1163,7 @@ def run_density_plot(
             frames.append(load_run_tables(db_path, experiment, run, fitness_metric))
 
     if not frames and links_path.exists():
-        return regenerate_plots_from_links(analysis_dir, fitness_metric)
+        return regenerate_plots_from_links(analysis_dir, fitness_metric, output_name)
     if not frames:
         raise RuntimeError("No experiment databases were found for the requested study/experiments/runs.")
 
@@ -1147,7 +1184,7 @@ def run_density_plot(
     if links_df.empty:
         raise RuntimeError("No valid parent-child links were found to plot.")
 
-    crossover_grid_path = analysis_dir / "parent_child_fitness_distance_density_by_crossover.png"
+    crossover_grid_path = analysis_dir / output_name
     crossover_distance_path = analysis_dir / "parent_child_morphology_distance_by_crossover.png"
     generation_distance_path = analysis_dir / "parent_child_morphology_distance_by_generation.png"
 
@@ -1187,6 +1224,7 @@ def main():
         env_conditions=args.env_conditions,
         plastic=args.plastic,
         fitness_metric=args.fitness_metric,
+        output_name=args.output_name,
     )
 
 

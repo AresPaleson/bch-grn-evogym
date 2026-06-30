@@ -2,27 +2,19 @@
 import argparse
 from itertools import combinations
 from pathlib import Path
-import textwrap
 from typing import Iterable
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy import stats
 
 try:
     from .crossover_labels import (
-        CROSSOVER_COLORS,
-        CROSSOVER_ORDER,
         display_crossover_name,
         infer_crossover_type,
     )
 except ImportError:
     from crossover_labels import (
-        CROSSOVER_COLORS,
-        CROSSOVER_ORDER,
         display_crossover_name,
         infer_crossover_type,
     )
@@ -79,15 +71,6 @@ def decision_from_p(p_value, alpha: float) -> str:
     if p_value is None or pd.isna(p_value):
         return "not_tested"
     return "significant" if float(p_value) < alpha else "not_significant"
-
-
-def format_p(value) -> str:
-    if value is None or pd.isna(value):
-        return "NA"
-    value = float(value)
-    if value < 0.001:
-        return "<0.001"
-    return f"{value:.3f}"
 
 
 def holm_adjust(p_values: list[float]) -> list[float]:
@@ -470,188 +453,6 @@ def pairwise_rows(run_means: pd.DataFrame, metrics: list[str], assumptions_df: p
     return rows
 
 
-def ordered_crossover_values(values: Iterable) -> list[str]:
-    unique = [str(value) for value in pd.Series(list(values)).dropna().unique()]
-    ordered = [value for value in CROSSOVER_ORDER if value in unique]
-    ordered.extend(sorted(value for value in unique if value not in ordered))
-    return ordered
-
-
-def metric_label(metric: str) -> str:
-    return str(metric).replace("_", " ")
-
-
-def short_crossover_name(crossover_type: str) -> str:
-    labels = {
-        "promoter_aligned_cut_and_splice": "cut/splice",
-        "arithmetic_recombination": "arithmetic",
-        "homologous_gene_block_recombination": "homologous",
-    }
-    return labels.get(str(crossover_type), display_crossover_name(crossover_type))
-
-
-def plot_statistical_summary(
-    analysis_dir: Path,
-    alpha: float,
-    metrics: list[str],
-    run_means: pd.DataFrame,
-    descriptive_df: pd.DataFrame,
-    omnibus_df: pd.DataFrame,
-    pairwise_df: pd.DataFrame,
-) -> Path:
-    output_path = analysis_dir / "final_generation_population_statistical_summary.png"
-    setup_counts = (
-        run_means.groupby(["crossover_type", "crossover_label"])["run"]
-        .nunique()
-        .reset_index(name="n_runs")
-        .sort_values("crossover_type")
-    )
-
-    fig, axes = plt.subplots(2, 2, figsize=(20, 14), constrained_layout=True)
-    fig.suptitle(
-        "Final-generation population statistical summary",
-        fontsize=18,
-        fontweight="bold",
-    )
-
-    ax = axes[0, 0]
-    primary_metric = "fitness" if "fitness" in metrics else metrics[0] if metrics else ""
-    primary_desc = descriptive_df[descriptive_df["metric"] == primary_metric].copy()
-    if primary_desc.empty:
-        ax.text(0.5, 0.5, "No primary final-generation metric", ha="center", va="center")
-        ax.set_axis_off()
-    else:
-        order = ordered_crossover_values(primary_desc["crossover_type"])
-        primary_desc["order"] = primary_desc["crossover_type"].map({name: idx for idx, name in enumerate(order)})
-        primary_desc = primary_desc.sort_values("order")
-        labels = [display_crossover_name(name) for name in primary_desc["crossover_type"]]
-        means = primary_desc["mean"].to_numpy(dtype=float)
-        ci_low = primary_desc["ci95_low"].to_numpy(dtype=float)
-        ci_high = primary_desc["ci95_high"].to_numpy(dtype=float)
-        yerr = np.vstack([means - ci_low, ci_high - means])
-        colors = [CROSSOVER_COLORS.get(name, "#6C757D") for name in primary_desc["crossover_type"]]
-        ax.bar(labels, means, yerr=yerr, capsize=5, color=colors, edgecolor="#222222", linewidth=0.7)
-        ax.set_title(f"Primary final-generation outcome: {metric_label(primary_metric)}")
-        ax.set_ylabel("Run-level final population mean")
-        ax.tick_params(axis="x", rotation=20)
-        ax.grid(axis="y", alpha=0.25)
-        primary_omnibus = omnibus_df[omnibus_df["metric"] == primary_metric]
-        if not primary_omnibus.empty:
-            row = primary_omnibus.iloc[0]
-            effect_text = (
-                f"{row['effect_size_name']}={float(row['effect_size']):.4f}"
-                if row["effect_size_name"] and pd.notna(row["effect_size"])
-                else "effect_size=NA"
-            )
-            ax.text(
-                0.02,
-                0.96,
-                f"{row['selected_test']}: p={format_p(row['p_value'])}, {effect_text}",
-                transform=ax.transAxes,
-                ha="left",
-                va="top",
-                fontsize=9,
-                bbox={"facecolor": "white", "edgecolor": "#DDDDDD", "alpha": 0.9},
-            )
-
-    ax = axes[0, 1]
-    if omnibus_df.empty:
-        ax.text(0.5, 0.5, "No omnibus tests", ha="center", va="center")
-        ax.set_axis_off()
-    else:
-        omni = omnibus_df.copy()
-        omni["effect_size"] = pd.to_numeric(omni["effect_size"], errors="coerce")
-        omni = omni.sort_values("effect_size", ascending=True)
-        colors = np.where(omni["decision"] == "significant", "#4E79A7", "#B8B8B8")
-        ax.barh([metric_label(metric) for metric in omni["metric"]], omni["effect_size"], color=colors)
-        ax.set_title("Omnibus/direct effect size by metric")
-        ax.set_xlabel("Effect size")
-        ax.grid(axis="x", alpha=0.25)
-        for idx, row in enumerate(omni.itertuples(index=False)):
-            value = row.effect_size
-            if pd.notna(value):
-                ax.text(value + 0.01, idx, f"p={format_p(row.p_value)}", va="center", fontsize=7)
-
-    ax = axes[1, 0]
-    significant_pairs = pairwise_df[pairwise_df["decision_holm"] == "significant"].copy() if not pairwise_df.empty else pd.DataFrame()
-    if significant_pairs.empty:
-        ax.text(0.5, 0.5, "No significant Holm-corrected pairwise tests", ha="center", va="center")
-        ax.set_axis_off()
-    else:
-        significant_pairs["abs_effect"] = pd.to_numeric(significant_pairs["effect_size"], errors="coerce").abs()
-        significant_pairs = significant_pairs.sort_values("abs_effect", ascending=True).tail(12)
-        labels = [
-            (
-                f"{metric_label(row.metric)}: "
-                f"{short_crossover_name(row.group_a)} vs {short_crossover_name(row.group_b)}"
-            )
-            for row in significant_pairs.itertuples(index=False)
-        ]
-        effects = significant_pairs["effect_size"].to_numpy(dtype=float)
-        ax.barh(labels, effects, color="#59A14F")
-        ax.axvline(0, color="#333333", linewidth=0.8)
-        ax.set_title("Largest significant pairwise effects")
-        ax.set_xlabel("Effect size")
-        ax.tick_params(axis="y", labelsize=8)
-        ax.grid(axis="x", alpha=0.25)
-        for idx, row in enumerate(significant_pairs.itertuples(index=False)):
-            ax.text(row.effect_size, idx, f" p={format_p(row.p_value_holm)}", va="center", fontsize=7)
-
-    ax = axes[1, 1]
-    ax.set_axis_off()
-    summary_lines = [
-        f"Alpha: {alpha}",
-        "Independent unit: one final-generation population mean per run.",
-        "Methods: Shapiro-Wilk checks choose Welch/ANOVA or Mann-Whitney/Kruskal-Wallis; pairwise tests use Holm correction.",
-    ]
-    if not setup_counts.empty:
-        setup_text = "; ".join(
-            f"{row.crossover_label}: n={int(row.n_runs)}"
-            for row in setup_counts.itertuples(index=False)
-        )
-        summary_lines.append("Setups: " + setup_text + ".")
-    if not omnibus_df.empty:
-        significant_omni = omnibus_df[omnibus_df["decision"] == "significant"]
-        if significant_omni.empty:
-            summary_lines.append("No omnibus/direct tests were significant.")
-        else:
-            result_text = "; ".join(
-                f"{metric_label(row.metric)} p={format_p(row.p_value)}, {row.effect_size_name}={row.effect_size:.2f}"
-                for row in significant_omni.itertuples(index=False)
-                if pd.notna(row.effect_size)
-            )
-            summary_lines.append("Significant omnibus/direct tests: " + result_text + ".")
-    if not significant_pairs.empty:
-        pair_text = "; ".join(
-            (
-                f"{metric_label(row.metric)} {short_crossover_name(row.group_a)} vs {short_crossover_name(row.group_b)} "
-                f"p={format_p(row.p_value_holm)}, {row.effect_size_name}={row.effect_size:.2f}"
-            )
-            for row in significant_pairs.tail(6).itertuples(index=False)
-        )
-        summary_lines.append("Selected significant pairwise tests: " + pair_text + ".")
-
-    wrapped_lines = []
-    for line in summary_lines:
-        wrapped_lines.extend(textwrap.wrap(line, width=68) or [""])
-        wrapped_lines.append("")
-    ax.text(
-        0.0,
-        1.0,
-        "\n".join(wrapped_lines).strip(),
-        transform=ax.transAxes,
-        ha="left",
-        va="top",
-        fontsize=8.8,
-        linespacing=1.35,
-    )
-    ax.set_title("Statistical result table", loc="left")
-
-    fig.savefig(output_path, dpi=220)
-    plt.close(fig)
-    return output_path
-
-
 def run_final_generation_population_tests(
     *,
     analysis_dir: Path,
@@ -691,17 +492,6 @@ def run_final_generation_population_tests(
 
     if legacy_report_path.exists():
         legacy_report_path.unlink()
-
-    chart_path = plot_statistical_summary(
-        analysis_dir,
-        alpha,
-        metrics,
-        run_means,
-        descriptive_df,
-        omnibus_df,
-        pairwise_df,
-    )
-    output_paths["statistical_summary_chart"] = chart_path
 
     for path in output_paths.values():
         print(f"Saved final-generation statistical output to: {path}")

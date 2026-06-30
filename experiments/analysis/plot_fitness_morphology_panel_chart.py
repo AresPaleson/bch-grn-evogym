@@ -38,6 +38,13 @@ CROSSOVER_HATCHES = {
     "arithmetic_recombination": "//",
     "homologous_gene_block_recombination": "\\\\",
 }
+BASE_FONT_SIZE = 34
+AXIS_TITLE_FONT_SIZE = 36
+AXIS_LABEL_FONT_SIZE = 34
+TICK_FONT_SIZE = 31
+LEGEND_FONT_SIZE = 31
+FIGURE_TITLE_FONT_SIZE = 42
+PANEL_LABEL_FONT_SIZE = 42
 
 
 def parse_args():
@@ -74,12 +81,12 @@ def set_style():
             "grid.alpha": 0.5,
             "font.family": "serif",
             "font.serif": ["Times New Roman", "DejaVu Serif", "Times", "serif"],
-            "font.size": 15,
-            "axes.titlesize": 18,
-            "axes.labelsize": 17,
-            "xtick.labelsize": 15,
-            "ytick.labelsize": 15,
-            "legend.fontsize": 15,
+            "font.size": BASE_FONT_SIZE,
+            "axes.titlesize": AXIS_TITLE_FONT_SIZE,
+            "axes.labelsize": AXIS_LABEL_FONT_SIZE,
+            "xtick.labelsize": TICK_FONT_SIZE,
+            "ytick.labelsize": TICK_FONT_SIZE,
+            "legend.fontsize": LEGEND_FONT_SIZE,
             "savefig.facecolor": "#FCFCFA",
             "savefig.dpi": 300,
         }
@@ -154,6 +161,7 @@ def plot_fitness_panel(ax, fitness_df: pd.DataFrame, metric: str, title: str):
     ax.set_title(title)
     ax.set_xlabel("Generation")
     ax.set_ylabel("Fitness")
+    ax.set_ylim(bottom=0.1)
     ax.grid(True)
     clean_axes(ax)
     return handles, labels
@@ -195,8 +203,8 @@ def plot_generation_distance_panel(ax, summary_df: pd.DataFrame):
 
     ax.set_title("Parent-Child Morphological Distance Over Generations")
     ax.set_xlabel("Child generation")
-    ax.set_ylabel("Mean normalized distance")
-    ax.set_ylim(0, 0.6)
+    ax.set_ylabel("Mean distance")
+    ax.set_ylim(-0.05, 0.6)
     ax.grid(True)
     clean_axes(ax)
 
@@ -257,8 +265,8 @@ def plot_crossover_distance_panel(ax, links_df: pd.DataFrame):
 
     ax.set_title("Parent-Child Morphological Distance by Operator")
     ax.set_xlabel("")
-    ax.set_ylabel("Normalized distance")
-    ax.set_ylim(0, 0.6)
+    ax.set_ylabel("Mean distance")
+    ax.set_ylim(-0.05, 0.6)
     ax.set_xlim(0.45, len(CROSSOVER_ORDER) + 0.55)
     ax.set_xticks(range(1, len(CROSSOVER_ORDER) + 1))
     ax.set_xticklabels(labels, rotation=15, ha="right")
@@ -274,7 +282,7 @@ def add_panel_label(ax, label: str):
         transform=ax.transAxes,
         ha="left",
         va="top",
-        fontsize=24,
+        fontsize=PANEL_LABEL_FONT_SIZE,
         fontweight="bold",
         color="#1E2430",
         bbox={
@@ -313,7 +321,7 @@ def run_plot(
     set_style()
     fitness_df, generation_summary_df, links_df = load_inputs(analysis_dir)
 
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12.4, 8.8))
+    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(18.0, 12.2))
 
     handles, labels = plot_fitness_panel(
         axes[0, 0],
@@ -343,12 +351,12 @@ def run_plot(
 
     fig.suptitle(
         "Fitness and Parent-Child Morphological Distance",
-        fontsize=24,
+        fontsize=FIGURE_TITLE_FONT_SIZE,
         fontweight="bold",
         color="#1E2430",
         y=0.99,
     )
-    fig.tight_layout(rect=(0.035, 0.02, 1, 0.935), h_pad=2.2, w_pad=2.0)
+    fig.tight_layout(rect=(0.055, 0.025, 1, 0.905), h_pad=3.0, w_pad=3.2)
 
     for label, ax in (
         ("A", axes[0, 0]),

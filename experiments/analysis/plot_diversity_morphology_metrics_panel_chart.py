@@ -16,6 +16,13 @@ from crossover_labels import (
 INK = "#1E2430"
 GRID = "#D9DDE3"
 BG = "#FCFCFA"
+BASE_FONT_SIZE = 34
+AXIS_TITLE_FONT_SIZE = 36
+AXIS_LABEL_FONT_SIZE = 34
+TICK_FONT_SIZE = 31
+LEGEND_FONT_SIZE = 31
+FIGURE_TITLE_FONT_SIZE = 42
+PANEL_LABEL_FONT_SIZE = 42
 CROSSOVER_LINESTYLES = {
     "promoter_aligned_cut_and_splice": "-",
     "arithmetic_recombination": "--",
@@ -61,12 +68,12 @@ def set_style():
             "grid.alpha": 0.5,
             "font.family": "serif",
             "font.serif": ["Times New Roman", "DejaVu Serif", "Times", "serif"],
-            "font.size": 15,
-            "axes.titlesize": 18,
-            "axes.labelsize": 17,
-            "xtick.labelsize": 15,
-            "ytick.labelsize": 15,
-            "legend.fontsize": 15,
+            "font.size": BASE_FONT_SIZE,
+            "axes.titlesize": AXIS_TITLE_FONT_SIZE,
+            "axes.labelsize": AXIS_LABEL_FONT_SIZE,
+            "xtick.labelsize": TICK_FONT_SIZE,
+            "ytick.labelsize": TICK_FONT_SIZE,
+            "legend.fontsize": LEGEND_FONT_SIZE,
             "savefig.facecolor": BG,
             "savefig.dpi": 300,
         }
@@ -88,7 +95,7 @@ def add_panel_label(ax, label: str):
         transform=ax.transAxes,
         ha="left",
         va="bottom",
-        fontsize=24,
+        fontsize=PANEL_LABEL_FONT_SIZE,
         fontweight="bold",
         color=INK,
         bbox={
@@ -157,7 +164,7 @@ def plot_population_diversity(ax, summary_df: pd.DataFrame):
     ax.set_xlabel("Generation")
     ax.set_ylabel("Mean pairwise distance")
     ax.set_xlim(left=0)
-    ax.set_ylim(bottom=0)
+    ax.set_ylim(bottom=-0.03)
     ax.grid(True)
     clean_axes(ax)
     return handles, labels
@@ -202,7 +209,7 @@ def plot_elite_lineage_trajectory(ax, summary_df: pd.DataFrame):
     ax.set_xlabel("Generation")
     ax.set_ylabel("Mean parent-child distance")
     ax.set_xlim(left=0)
-    ax.set_ylim(0, 0.8)
+    ax.set_ylim(-0.05, 1.1)
     ax.grid(True)
     clean_axes(ax)
 
@@ -246,7 +253,7 @@ def plot_metric_line(ax, outer_df: pd.DataFrame, metric: str, title: str, ylabel
                 alpha=0.16,
             )
 
-    ax.set_title(title)
+    ax.set_title(title, pad=18)
     ax.set_xlabel("Generation")
     ax.set_ylabel(ylabel)
     ax.grid(True)
@@ -278,7 +285,7 @@ def run_plot(
     set_style()
     diversity_df, elite_lineage_df, outer_df = load_inputs(analysis_dir)
 
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12.4, 8.8))
+    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(18.0, 12.2))
 
     handles, labels = plot_population_diversity(axes[0, 0], diversity_df)
     plot_elite_lineage_trajectory(axes[1, 0], elite_lineage_df)
@@ -288,7 +295,7 @@ def run_plot(
         outer_df,
         "environmental_contact_area",
         "Environmental Contact Area Over Generations",
-        "Environmental contact area",
+        "Env. contact area",
     )
 
     if handles:
@@ -303,12 +310,12 @@ def run_plot(
 
     fig.suptitle(
         "Population Diversity and Morphology Metrics",
-        fontsize=24,
+        fontsize=FIGURE_TITLE_FONT_SIZE,
         fontweight="bold",
         color=INK,
         y=0.99,
     )
-    fig.tight_layout(rect=(0.035, 0.02, 1, 0.935), h_pad=2.2, w_pad=2.0)
+    fig.tight_layout(rect=(0.055, 0.025, 1, 0.905), h_pad=3.0, w_pad=3.2)
 
     for label, ax in (
         ("A", axes[0, 0]),
