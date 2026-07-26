@@ -270,10 +270,9 @@ class ExperimentSettings:
     
     analyze_after_run: int = 1
     analysis_metrics: str = (
-        "size,proportion,coverage,symmetry,relative_number_of_joints,"
+        "size,proportion,coverage,relative_number_of_joints,"
         "relative_number_of_limbs,total_voxel_volume,bounding_box_area,"
         "actuation_energy_cost,"
-        "environmental_contact_area,"
         "material_ratios,muscle_phase_ratios"
     )
     analysis_output_name: str = "morphology_metrics_progression.png"

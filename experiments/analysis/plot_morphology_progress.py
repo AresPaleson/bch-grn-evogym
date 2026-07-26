@@ -6,19 +6,24 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from crossover_labels import display_experiment_name
+from crossover_labels import (
+    CROSSOVER_COLORS,
+    CROSSOVER_ORDER,
+    display_crossover_name,
+    display_experiment_name,
+    infer_crossover_type,
+)
 
 
 DEFAULT_METRICS = [
     ("size", "Size"),
     ("proportion", "Proportion"),
     ("coverage", "Coverage"),
-    ("symmetry", "Symmetry"),
-    ("bounding_box_area", "Bounding Box Area"),
     ("relative_number_of_joints", "Relative Number Of Joints"),
     ("relative_number_of_limbs", "Relative Number Of Limbs"),
+    ("total_voxel_volume", "Total Voxel Volume"),
+    ("bounding_box_area", "Bounding Box Area"),
     ("actuation_energy_cost", "Actuation Energy Cost"),
-    ("environmental_contact_area", "Environmental Contact Area"),
     ("material_ratios", "Material Ratios"),
     ("muscle_phase_ratios", "Muscle Phase Ratios"),
 ]
@@ -33,6 +38,27 @@ COLORS = [
     "#7C6F9B",
     "#7E9C45",
 ]
+
+CROSSOVER_LINESTYLES = {
+    "promoter_aligned_cut_and_splice": "-",
+    "arithmetic_recombination": "--",
+    "homologous_gene_block_recombination": "-.",
+}
+CROSSOVER_MARKERS = {
+    "promoter_aligned_cut_and_splice": "o",
+    "arithmetic_recombination": "s",
+    "homologous_gene_block_recombination": "^",
+}
+
+INK = "#1E2430"
+GRID = "#D9DDE3"
+BG = "#FCFCFA"
+BASE_FONT_SIZE = 34
+AXIS_TITLE_FONT_SIZE = 36
+AXIS_LABEL_FONT_SIZE = 34
+TICK_FONT_SIZE = 31
+LEGEND_FONT_SIZE = 31
+COMPOSITE_LEGEND_FONT_SIZE = 18
 
 SERIES_COLORS = {
     "bone_prop": "#1E2430",
@@ -155,6 +181,18 @@ def parse_args():
         "--output-name",
         default="morphology_metrics_progression.png",
         type=str,
+    )
+    parser.add_argument(
+        "--split-panels",
+        default=0,
+        type=int,
+        help="If set, also save each resolved panel as its own PNG.",
+    )
+    parser.add_argument(
+        "--panel-output-dir",
+        default="",
+        type=str,
+        help="Directory for split panel PNGs. Defaults to <analysis-dir>/morphology_panels.",
     )
     return parser.parse_args()
 
@@ -381,7 +419,169 @@ def plot_composite_panel(ax, df: pd.DataFrame, experiments, panel):
     ax.legend(frameon=False, loc="best", fontsize=8)
 
 
-def run_plot(*, analysis_dir: Path, experiments_raw: str = "", metrics_raw: str = DEFAULT_METRICS_RAW, output_name: str = "morphology_metrics_progression.png"):
+def set_style_individual():
+    plt.style.use("default")
+    plt.rcParams.update(
+        {
+            "figure.facecolor": BG,
+            "axes.facecolor": "white",
+            "axes.edgecolor": "#9AA3AD",
+            "axes.labelcolor": INK,
+            "axes.titlecolor": INK,
+            "xtick.color": INK,
+            "ytick.color": INK,
+            "grid.color": GRID,
+            "grid.alpha": 0.5,
+            "font.family": "serif",
+            "font.serif": ["Times New Roman", "DejaVu Serif", "Times", "serif"],
+            "font.size": BASE_FONT_SIZE,
+            "axes.titlesize": AXIS_TITLE_FONT_SIZE,
+            "axes.labelsize": AXIS_LABEL_FONT_SIZE,
+            "xtick.labelsize": TICK_FONT_SIZE,
+            "ytick.labelsize": TICK_FONT_SIZE,
+            "legend.fontsize": LEGEND_FONT_SIZE,
+            "savefig.facecolor": BG,
+            "savefig.dpi": 300,
+        }
+    )
+
+
+def ordered_experiments(df: pd.DataFrame, experiments) -> list[str]:
+    order_index = {crossover: idx for idx, crossover in enumerate(CROSSOVER_ORDER)}
+    return sorted(
+        experiments,
+        key=lambda experiment: order_index.get(infer_crossover_type(experiment), len(order_index)),
+    )
+
+
+def plot_single_panel_by_crossover(ax, df: pd.DataFrame, experiments, metric: str, label: str):
+    handles = []
+    labels = []
+
+    for experiment in ordered_experiments(df, experiments):
+        data = df[df["experiment"] == experiment].sort_values("generation")
+        if data.empty:
+            continue
+
+        crossover = infer_crossover_type(experiment)
+        color = CROSSOVER_COLORS.get(crossover, "#4E79A7")
+        crossover_label = display_crossover_name(crossover)
+        center = data[first_existing_column(data, [f"{metric}_mean_mean", f"{metric}_mean_median"])]
+        spread = data[first_existing_column(data, [f"{metric}_mean_std", f"{metric}_std_median"])].fillna(0.0)
+
+        line = ax.plot(
+            data["generation"],
+            center,
+            color=color,
+            linestyle=CROSSOVER_LINESTYLES.get(crossover, "-"),
+            linewidth=2.4,
+            marker=CROSSOVER_MARKERS.get(crossover, "o"),
+            markersize=4.2,
+            markevery=5,
+            label=crossover_label,
+        )[0]
+        if (spread > 0).any():
+            ax.fill_between(
+                data["generation"],
+                (center - spread).clip(lower=0.0),
+                center + spread,
+                color=color,
+                alpha=0.16,
+            )
+        if crossover_label not in labels:
+            handles.append(line)
+            labels.append(crossover_label)
+
+    ax.set_title(label)
+    ax.set_xlabel("Generation")
+    ax.set_ylabel(label)
+    ax.grid(True)
+    clean_axes(ax)
+    return handles, labels
+
+
+def run_plot_individual(
+    *,
+    analysis_dir: Path,
+    output_dir: Path,
+    experiments_raw: str = "",
+    metrics_raw: str = DEFAULT_METRICS_RAW,
+):
+    outer_path = analysis_dir / "gens_robots_outer.csv"
+    if not outer_path.exists():
+        raise FileNotFoundError(f"Missing consolidated CSV: {outer_path}")
+
+    df = add_derived_plot_columns(pd.read_csv(outer_path))
+    requested_metrics = parse_metric_list(metrics_raw)
+
+    if experiments_raw:
+        experiments = [item.strip() for item in experiments_raw.split(",") if item.strip()]
+    else:
+        experiments = list(df["experiment"].dropna().unique())
+
+    panels = resolve_panels(df, requested_metrics)
+    if not panels:
+        raise RuntimeError("None of the requested morphology metrics were found in gens_robots_outer.csv.")
+
+    set_style_individual()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    saved_paths = []
+
+    for idx_panel, panel in enumerate(panels):
+        letter = chr(ord("A") + idx_panel)
+
+        if panel["kind"] == "composite":
+            n_series = len(panel["series"]) * len(experiments)
+            ncol = 3
+            nrow = math.ceil(n_series / ncol)
+            fig, ax = plt.subplots(figsize=(9.0, 7.6 + 0.42 * nrow))
+            plot_composite_panel(ax, df, experiments, panel)
+            ax.set_title(ax.get_title(), pad=16)
+            legend = ax.get_legend()
+            if legend is not None:
+                legend.remove()
+            handles, labels = ax.get_legend_handles_labels()
+            fig.legend(
+                handles,
+                labels,
+                frameon=False,
+                loc="lower center",
+                bbox_to_anchor=(0.5, 0.0),
+                fontsize=COMPOSITE_LEGEND_FONT_SIZE,
+                ncol=ncol,
+                columnspacing=1.2,
+            )
+            bottom = min(0.28, 0.06 * nrow + 0.06)
+            fig.tight_layout(rect=(0, bottom, 1, 0.94))
+        else:
+            fig, ax = plt.subplots(figsize=(9.0, 7.6))
+            handles, labels = plot_single_panel_by_crossover(
+                ax, df, experiments, panel["metric"], panel["label"]
+            )
+            ax.set_title(ax.get_title(), pad=16)
+            unique = dict(zip(labels, handles))
+            fig.legend(
+                unique.values(),
+                unique.keys(),
+                frameon=False,
+                loc="upper center",
+                bbox_to_anchor=(0.5, 1.0),
+                fontsize=LEGEND_FONT_SIZE,
+                ncol=3,
+                columnspacing=1.2,
+            )
+            fig.tight_layout(rect=(0, 0, 1, 0.85))
+
+        output_path = output_dir / f"morphology_{letter}_{panel['metric']}.png"
+        fig.savefig(output_path, dpi=300, bbox_inches="tight")
+        plt.close(fig)
+        saved_paths.append(output_path)
+        print(f"Saved panel to: {output_path}")
+
+    return saved_paths
+
+
+def run_plot(*, analysis_dir: Path, experiments_raw: str = "", metrics_raw: str = DEFAULT_METRICS_RAW, output_name: str = "morphology_metrics_progression.png", split_panels: bool = False, panel_output_dir: Path = None):
     outer_path = analysis_dir / "gens_robots_outer.csv"
     if not outer_path.exists():
         raise FileNotFoundError(f"Missing consolidated CSV: {outer_path}")
@@ -468,6 +668,17 @@ def run_plot(*, analysis_dir: Path, experiments_raw: str = "", metrics_raw: str 
 
     print(f"Saved figure to: {output_path}")
 
+    if split_panels:
+        panel_dir = panel_output_dir if panel_output_dir else analysis_dir / "morphology_panels"
+        run_plot_individual(
+            analysis_dir=analysis_dir,
+            output_dir=panel_dir,
+            experiments_raw=experiments_raw,
+            metrics_raw=metrics_raw,
+        )
+
+    return output_path
+
 
 def main():
     args = parse_args()
@@ -481,6 +692,8 @@ def main():
         experiments_raw=args.experiments,
         metrics_raw=args.metrics,
         output_name=args.output_name,
+        split_panels=bool(args.split_panels),
+        panel_output_dir=Path(args.panel_output_dir) if args.panel_output_dir else None,
     )
 
 

@@ -3,7 +3,9 @@ import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+from matplotlib.lines import Line2D
 
 from crossover_labels import (
     CROSSOVER_COLORS,
@@ -49,6 +51,18 @@ def parse_args():
         "--output-name",
         default="diversity_step_symmetry_contact_panel_chart.png",
         type=str,
+    )
+    parser.add_argument(
+        "--split-panels",
+        default=0,
+        type=int,
+        help="If set, also save each of the four panels as its own PNG.",
+    )
+    parser.add_argument(
+        "--panel-output-dir",
+        default="",
+        type=str,
+        help="Directory for split panel PNGs. Defaults to <analysis-dir>/diversity_panels.",
     )
     return parser.parse_args()
 
@@ -214,6 +228,57 @@ def plot_elite_lineage_trajectory(ax, summary_df: pd.DataFrame):
     clean_axes(ax)
 
 
+def plot_elite_lineage_trajectory_smoothed(ax, summary_df: pd.DataFrame, window: int = 5):
+    if summary_df.empty:
+        ax.text(
+            0.5,
+            0.5,
+            "No elite lineage parent-child distances found",
+            ha="center",
+            va="center",
+            transform=ax.transAxes,
+            color=INK,
+        )
+        ax.set_ylim(-0.05, 1.1)
+    else:
+        observed_max = 0.0
+        for crossover in CROSSOVER_ORDER:
+            data = summary_df[summary_df["crossover_type"] == crossover].sort_values(
+                "generation_zero_based"
+            )
+            if data.empty:
+                continue
+            color = CROSSOVER_COLORS[crossover]
+            x = data["generation_zero_based"].to_numpy(dtype=float)
+            roll_kwargs = dict(window=window, min_periods=1, center=True)
+            y = data["mean_distance"].rolling(**roll_kwargs).mean().to_numpy(dtype=float)
+            q25 = data["q25_distance"].rolling(**roll_kwargs).mean().to_numpy(dtype=float)
+            q75 = data["q75_distance"].rolling(**roll_kwargs).mean().to_numpy(dtype=float)
+            observed_max = max(observed_max, np.nanmax(q75)) if q75.size else observed_max
+
+            ax.plot(
+                x,
+                y,
+                color=color,
+                linestyle=CROSSOVER_LINESTYLES[crossover],
+                linewidth=2.4,
+                marker=CROSSOVER_MARKERS[crossover],
+                markersize=4.2,
+            )
+            ax.fill_between(x, q25, q75, color=color, alpha=0.16, linewidth=0)
+
+        # Scale to the smoothed data's true max instead of a fixed ceiling, so the
+        # shaded band is never clipped.
+        ax.set_ylim(-0.05, max(observed_max * 1.08, 0.1))
+
+    ax.set_title(f"Phenotypic Lineage Trajectory\n({window}-gen rolling mean)")
+    ax.set_xlabel("Generation")
+    ax.set_ylabel("Mean parent-child distance")
+    ax.set_xlim(left=0)
+    ax.grid(True)
+    clean_axes(ax)
+
+
 def plot_metric_line(ax, outer_df: pd.DataFrame, metric: str, title: str, ylabel: str):
     for experiment in ordered_experiments(outer_df):
         data = outer_df[outer_df["experiment"] == experiment].sort_values("generation")
@@ -277,10 +342,92 @@ def load_inputs(analysis_dir: Path):
     )
 
 
+def crossover_legend_handles():
+    handles = []
+    labels = []
+    for crossover in CROSSOVER_ORDER:
+        handles.append(
+            Line2D(
+                [0],
+                [0],
+                color=CROSSOVER_COLORS[crossover],
+                linestyle=CROSSOVER_LINESTYLES[crossover],
+                marker=CROSSOVER_MARKERS[crossover],
+                markersize=4.2,
+                linewidth=2.4,
+            )
+        )
+        labels.append(CROSSOVER_LABELS[crossover])
+    return handles, labels
+
+
+def run_plot_individual(
+    *,
+    analysis_dir: Path,
+    output_dir: Path,
+):
+    set_style()
+    diversity_df, elite_lineage_df, outer_df = load_inputs(analysis_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    legend_handles, legend_labels = crossover_legend_handles()
+
+    panels = [
+        ("A_mean_population_diversity_over_time", lambda ax: plot_population_diversity(ax, diversity_df)),
+        (
+            "B_phenotypic_lineage_trajectory",
+            lambda ax: plot_elite_lineage_trajectory_smoothed(ax, elite_lineage_df),
+        ),
+        (
+            "C_symmetry_over_generations",
+            lambda ax: plot_metric_line(ax, outer_df, "symmetry", "Symmetry Over Gen.", "Symmetry"),
+        ),
+        (
+            "D_environmental_contact_area_over_generations",
+            lambda ax: plot_metric_line(
+                ax,
+                outer_df,
+                "environmental_contact_area",
+                "Environmental Contact Area Over Gen.",
+                "Env. contact area",
+            ),
+        ),
+    ]
+
+    saved_paths = []
+    for name, plot_fn in panels:
+        two_line_title = name.startswith("B_")
+        fig_height = 8.3 if two_line_title else 7.6
+        rect_top = 0.80 if two_line_title else 0.85
+
+        fig, ax = plt.subplots(figsize=(9.0, fig_height))
+        plot_fn(ax)
+        ax.set_title(ax.get_title(), pad=16)
+        fig.legend(
+            legend_handles,
+            legend_labels,
+            frameon=False,
+            loc="upper center",
+            ncol=3,
+            bbox_to_anchor=(0.5, 1.0),
+            fontsize=LEGEND_FONT_SIZE,
+            columnspacing=1.2,
+        )
+        fig.tight_layout(rect=(0, 0, 1, rect_top))
+        output_path = output_dir / f"diversity_{name}.png"
+        fig.savefig(output_path, dpi=300, bbox_inches="tight")
+        plt.close(fig)
+        saved_paths.append(output_path)
+        print(f"Saved panel to: {output_path}")
+
+    return saved_paths
+
+
 def run_plot(
     *,
     analysis_dir: Path,
     output_name: str = "diversity_step_symmetry_contact_panel_chart.png",
+    split_panels: bool = False,
+    panel_output_dir: Path = None,
 ):
     set_style()
     diversity_df, elite_lineage_df, outer_df = load_inputs(analysis_dir)
@@ -330,6 +477,11 @@ def run_plot(
     plt.close(fig)
 
     print(f"Saved figure to: {output_path}")
+
+    if split_panels:
+        panel_dir = panel_output_dir if panel_output_dir else analysis_dir / "diversity_panels"
+        run_plot_individual(analysis_dir=analysis_dir, output_dir=panel_dir)
+
     return output_path
 
 
@@ -343,6 +495,8 @@ def main():
     run_plot(
         analysis_dir=analysis_dir,
         output_name=args.output_name,
+        split_panels=bool(args.split_panels),
+        panel_output_dir=Path(args.panel_output_dir) if args.panel_output_dir else None,
     )
 
 

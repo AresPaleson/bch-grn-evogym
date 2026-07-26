@@ -5,6 +5,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.patches import Patch
 
 from crossover_labels import (
     CROSSOVER_COLORS,
@@ -62,6 +63,18 @@ def parse_args():
         "--output-name",
         default="fitness_parent_child_morphology_panel_chart.png",
         type=str,
+    )
+    parser.add_argument(
+        "--split-panels",
+        default=0,
+        type=int,
+        help="If set, also save each of the four panels as its own PNG.",
+    )
+    parser.add_argument(
+        "--panel-output-dir",
+        default="",
+        type=str,
+        help="Directory for split panel PNGs. Defaults to <analysis-dir>/fitness_panels.",
     )
     return parser.parse_args()
 
@@ -313,10 +326,100 @@ def load_inputs(analysis_dir: Path):
     )
 
 
+def run_plot_individual(
+    *,
+    analysis_dir: Path,
+    output_dir: Path,
+):
+    set_style()
+    fitness_df, generation_summary_df, links_df = load_inputs(analysis_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    saved_paths = []
+
+    fig, ax = plt.subplots(figsize=(9.0, 7.6))
+    handles, labels = plot_fitness_panel(ax, fitness_df, "best", "Best Fitness Over Gen.")
+    ax.set_title(ax.get_title(), pad=16)
+    unique = dict(zip(labels, handles))
+    fig.legend(
+        unique.values(), unique.keys(), frameon=False, loc="upper center",
+        bbox_to_anchor=(0.5, 1.0), fontsize=LEGEND_FONT_SIZE, ncol=3, columnspacing=1.2,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.85))
+    output_path = output_dir / "fitness_A_best_fitness_over_generations.png"
+    fig.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    saved_paths.append(output_path)
+    print(f"Saved panel to: {output_path}")
+
+    fig, ax = plt.subplots(figsize=(9.0, 7.6))
+    handles, labels = plot_fitness_panel(ax, fitness_df, "mean", "Mean Fitness Over Gen.")
+    ax.set_title(ax.get_title(), pad=16)
+    unique = dict(zip(labels, handles))
+    fig.legend(
+        unique.values(), unique.keys(), frameon=False, loc="upper center",
+        bbox_to_anchor=(0.5, 1.0), fontsize=LEGEND_FONT_SIZE, ncol=3, columnspacing=1.2,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.85))
+    output_path = output_dir / "fitness_B_mean_fitness_over_generations.png"
+    fig.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    saved_paths.append(output_path)
+    print(f"Saved panel to: {output_path}")
+
+    fig, ax = plt.subplots(figsize=(9.0, 7.6))
+    plot_generation_distance_panel(ax, generation_summary_df)
+    ax.set_title(
+        ax.get_title().replace("Generations", "Gen.").replace("Morphological Distance", "Distance"),
+        pad=16,
+    )
+    handles, labels = ax.get_legend_handles_labels()
+    fig.legend(
+        handles, labels, frameon=False, loc="upper center",
+        bbox_to_anchor=(0.5, 1.0), fontsize=LEGEND_FONT_SIZE, ncol=3, columnspacing=1.2,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.85))
+    output_path = output_dir / "fitness_C_parent_child_morphological_distance_over_generations.png"
+    fig.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    saved_paths.append(output_path)
+    print(f"Saved panel to: {output_path}")
+
+    fig, ax = plt.subplots(figsize=(9.0, 7.6))
+    plot_crossover_distance_panel(ax, links_df)
+    ax.set_title(
+        ax.get_title().replace("Morphological Distance", "Distance"),
+        pad=16,
+    )
+    legend_handles = [
+        Patch(
+            facecolor=CROSSOVER_COLORS[crossover],
+            edgecolor="#1E2430",
+            alpha=0.72,
+            hatch=CROSSOVER_HATCHES[crossover],
+            label=display_crossover_name(crossover),
+        )
+        for crossover in CROSSOVER_ORDER
+    ]
+    fig.legend(
+        handles=legend_handles, frameon=False, loc="upper center",
+        bbox_to_anchor=(0.5, 1.0), fontsize=LEGEND_FONT_SIZE, ncol=3, columnspacing=1.2,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.85))
+    output_path = output_dir / "fitness_D_parent_child_morphological_distance_by_operator.png"
+    fig.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    saved_paths.append(output_path)
+    print(f"Saved panel to: {output_path}")
+
+    return saved_paths
+
+
 def run_plot(
     *,
     analysis_dir: Path,
     output_name: str = "fitness_parent_child_morphology_panel_chart.png",
+    split_panels: bool = False,
+    panel_output_dir: Path = None,
 ):
     set_style()
     fitness_df, generation_summary_df, links_df = load_inputs(analysis_dir)
@@ -371,6 +474,11 @@ def run_plot(
     plt.close(fig)
 
     print(f"Saved figure to: {output_path}")
+
+    if split_panels:
+        panel_dir = panel_output_dir if panel_output_dir else analysis_dir / "fitness_panels"
+        run_plot_individual(analysis_dir=analysis_dir, output_dir=panel_dir)
+
     return output_path
 
 
@@ -381,7 +489,12 @@ def main():
         if args.analysis_dir
         else Path(args.out_path) / args.study_name / "analysis"
     )
-    run_plot(analysis_dir=analysis_dir, output_name=args.output_name)
+    run_plot(
+        analysis_dir=analysis_dir,
+        output_name=args.output_name,
+        split_panels=bool(args.split_panels),
+        panel_output_dir=Path(args.panel_output_dir) if args.panel_output_dir else None,
+    )
 
 
 if __name__ == "__main__":

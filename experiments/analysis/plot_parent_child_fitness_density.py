@@ -41,13 +41,13 @@ COLORS = {
     "grid": "#D9DDE3",
     "gray": "#9AA3AD",
 }
-BASE_FONT_SIZE = 34
-AXIS_TITLE_FONT_SIZE = 36
-AXIS_LABEL_FONT_SIZE = 34
-TICK_FONT_SIZE = 31
-LEGEND_FONT_SIZE = 31
-FIGURE_TITLE_FONT_SIZE = 42
-PANEL_LABEL_FONT_SIZE = 42
+BASE_FONT_SIZE = 42
+AXIS_TITLE_FONT_SIZE = 46
+AXIS_LABEL_FONT_SIZE = 42
+TICK_FONT_SIZE = 38
+LEGEND_FONT_SIZE = 38
+FIGURE_TITLE_FONT_SIZE = 54
+PANEL_LABEL_FONT_SIZE = 54
 MIN_RELEVANT_DISPLACEMENT = -5.0
 
 DENSITY_CMAP = LinearSegmentedColormap.from_list(
@@ -170,6 +170,18 @@ def parse_args():
         "--output-name",
         default="parent_child_fitness_distance_density_by_crossover.png",
         type=str,
+    )
+    parser.add_argument(
+        "--split-panels",
+        default=0,
+        type=int,
+        help="If set, also save each density subplot as its own PNG.",
+    )
+    parser.add_argument(
+        "--panel-output-dir",
+        default="",
+        type=str,
+        help="Directory for split panel PNGs. Defaults to <analysis-dir>/density_panels.",
     )
     return parser.parse_args()
 
@@ -655,6 +667,7 @@ def plot_density_axis(
     label_fontsize=AXIS_LABEL_FONT_SIZE,
     tick_fontsize=TICK_FONT_SIZE,
     density_cmap=DENSITY_CMAP,
+    title_pad=None,
 ):
     plot_df = clip_plot_frame(
         clean_plot_frame(df, x_col, y_col),
@@ -674,7 +687,7 @@ def plot_density_axis(
     ax.tick_params(labelsize=tick_fontsize)
 
     if plot_df.empty:
-        ax.set_title(density_axis_title(title, "Corr: NA, n=0"), fontsize=title_fontsize)
+        ax.set_title(density_axis_title(title, "Corr: NA, n=0"), fontsize=title_fontsize, pad=title_pad)
         ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, color=COLORS["gray"])
         return
 
@@ -714,6 +727,7 @@ def plot_density_axis(
     ax.set_title(
         density_axis_title(title, f"Corr: {corr_text}, n={len(plot_df)}"),
         fontsize=title_fontsize,
+        pad=title_pad,
     )
     ax.set_xlim(*xlim)
     if ylim is not None:
@@ -756,6 +770,7 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             label_fontsize=AXIS_LABEL_FONT_SIZE,
             tick_fontsize=TICK_FONT_SIZE,
             density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
+            title_pad=14,
         )
         plot_density_axis(
             axes[1, col],
@@ -770,6 +785,7 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             label_fontsize=AXIS_LABEL_FONT_SIZE,
             tick_fontsize=TICK_FONT_SIZE,
             density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
+            title_pad=14,
         )
         plot_density_axis(
             axes[2, col],
@@ -784,6 +800,7 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             label_fontsize=AXIS_LABEL_FONT_SIZE,
             tick_fontsize=TICK_FONT_SIZE,
             density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
+            title_pad=14,
         )
 
     for col in range(1, len(CROSSOVER_TYPES)):
@@ -804,6 +821,98 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
     fig.tight_layout(rect=(0, 0.075, 1, 0.925), h_pad=1.8, w_pad=2.2)
     fig.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
+
+
+# Matches the font scheme used by the diversity/fitness split-panel exports so all
+# three panel folders render with identical text sizes.
+PANEL_AXIS_TITLE_FONT_SIZE = 36
+PANEL_AXIS_LABEL_FONT_SIZE = 34
+PANEL_TICK_FONT_SIZE = 31
+PANEL_FIGURE_TITLE_FONT_SIZE = 42
+
+
+def plot_individual_density_panels(links_df, output_dir, fitness_metric="displacement"):
+    if fitness_metric == "displacement":
+        links_df = links_df[
+            (links_df["child_fitness"] >= MIN_RELEVANT_DISPLACEMENT)
+            & (links_df["parent_fitness"] >= MIN_RELEVANT_DISPLACEMENT)
+        ].copy()
+
+    y_label = metric_label(fitness_metric)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    saved_paths = []
+
+    for crossover in CROSSOVER_TYPES:
+        crossover_df = links_df[links_df["crossover_type"] == crossover].copy()
+        all_parent_df = crossover_df[
+            crossover_df["parent_slot"].isin(["parent1", "parent2"])
+        ].copy()
+        closest_df = crossover_df[crossover_df["parent_slot"] == "closest_parent"].copy()
+        crossover_label = display_crossover_name(crossover)
+
+        fig, axes = plt.subplots(
+            nrows=3, ncols=1, figsize=(9.5, 19.5), sharex=True, constrained_layout=True
+        )
+        fig.set_constrained_layout_pads(w_pad=0.05, h_pad=0.05, hspace=0.10, wspace=0.02)
+
+        plot_density_axis(
+            axes[0],
+            all_parent_df,
+            "morph_distance",
+            "child_fitness",
+            f"Child {y_label} vs Both Parents",
+            f"Child {y_label}",
+            ylim=(0, 100),
+            xlabel="",
+            title_fontsize=PANEL_AXIS_TITLE_FONT_SIZE,
+            label_fontsize=PANEL_AXIS_LABEL_FONT_SIZE,
+            tick_fontsize=PANEL_TICK_FONT_SIZE,
+            density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
+            title_pad=14,
+        )
+        plot_density_axis(
+            axes[1],
+            closest_df,
+            "morph_distance",
+            "child_fitness",
+            "Child vs Closest Parent",
+            f"Child {y_label}",
+            ylim=(0, 100),
+            xlabel="",
+            title_fontsize=PANEL_AXIS_TITLE_FONT_SIZE,
+            label_fontsize=PANEL_AXIS_LABEL_FONT_SIZE,
+            tick_fontsize=PANEL_TICK_FONT_SIZE,
+            density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
+            title_pad=14,
+        )
+        plot_density_axis(
+            axes[2],
+            closest_df,
+            "morph_distance",
+            "fitness_delta",
+            "Child-Parent Change vs Closest Parent",
+            f"Child - Parent {y_label}",
+            ylim=(-90, 40),
+            xlabel="",
+            title_fontsize=PANEL_AXIS_TITLE_FONT_SIZE,
+            label_fontsize=PANEL_AXIS_LABEL_FONT_SIZE,
+            tick_fontsize=PANEL_TICK_FONT_SIZE,
+            density_cmap=CROSSOVER_DENSITY_CMAPS[crossover],
+            title_pad=14,
+        )
+
+        fig.suptitle(crossover_label, fontsize=PANEL_FIGURE_TITLE_FONT_SIZE)
+        fig.supxlabel(
+            "Euclidean distance",
+            fontsize=PANEL_AXIS_LABEL_FONT_SIZE,
+            color=COLORS["ink"],
+        )
+        output_path = output_dir / f"density_{crossover}.png"
+        fig.savefig(output_path, dpi=300, bbox_inches="tight")
+        plt.close(fig)
+        saved_paths.append(output_path)
+
+    return saved_paths
 
 
 def finite_frame(df, columns):
@@ -1077,6 +1186,8 @@ def regenerate_plots_from_links(
     analysis_dir: Path,
     fitness_metric: str,
     output_name: str = "parent_child_fitness_distance_density_by_crossover.png",
+    split_panels: bool = False,
+    panel_output_dir: Optional[Path] = None,
 ):
     links_path = analysis_dir / "parent_child_fitness_distance_links.csv"
     if not links_path.exists():
@@ -1104,6 +1215,13 @@ def regenerate_plots_from_links(
     print(f"Saved figure to: {crossover_grid_path}")
     print(f"Saved figure to: {crossover_distance_path}")
     print(f"Saved figure to: {generation_distance_path}")
+
+    if split_panels:
+        panel_dir = panel_output_dir if panel_output_dir else analysis_dir / "density_panels"
+        panel_paths = plot_individual_density_panels(links_df, panel_dir, fitness_metric=fitness_metric)
+        for panel_path in panel_paths:
+            print(f"Saved panel to: {panel_path}")
+
     return crossover_grid_path
 
 
@@ -1122,6 +1240,8 @@ def run_density_plot(
     plastic: int = 0,
     fitness_metric: str = "displacement",
     output_name: str = "parent_child_fitness_distance_density_by_crossover.png",
+    split_panels: bool = False,
+    panel_output_dir: Optional[Path] = None,
 ):
     style()
 
@@ -1135,7 +1255,9 @@ def run_density_plot(
 
     if DB_DEPENDENCY_ERROR is not None:
         if links_path.exists():
-            return regenerate_plots_from_links(analysis_dir, fitness_metric, output_name)
+            return regenerate_plots_from_links(
+                analysis_dir, fitness_metric, output_name, split_panels, panel_output_dir
+            )
         raise RuntimeError(
             "Database dependencies are unavailable and no existing parent-child "
             f"link CSV was found. Original import error: {DB_DEPENDENCY_ERROR}"
@@ -1163,7 +1285,9 @@ def run_density_plot(
             frames.append(load_run_tables(db_path, experiment, run, fitness_metric))
 
     if not frames and links_path.exists():
-        return regenerate_plots_from_links(analysis_dir, fitness_metric, output_name)
+        return regenerate_plots_from_links(
+            analysis_dir, fitness_metric, output_name, split_panels, panel_output_dir
+        )
     if not frames:
         raise RuntimeError("No experiment databases were found for the requested study/experiments/runs.")
 
@@ -1206,6 +1330,13 @@ def run_density_plot(
     print(f"Saved figure to: {crossover_grid_path}")
     print(f"Saved figure to: {crossover_distance_path}")
     print(f"Saved figure to: {generation_distance_path}")
+
+    if split_panels:
+        panel_dir = panel_output_dir if panel_output_dir else analysis_dir / "density_panels"
+        panel_paths = plot_individual_density_panels(links_df, panel_dir, fitness_metric=plot_fitness_metric)
+        for panel_path in panel_paths:
+            print(f"Saved panel to: {panel_path}")
+
     return crossover_grid_path
 
 
@@ -1225,6 +1356,8 @@ def main():
         plastic=args.plastic,
         fitness_metric=args.fitness_metric,
         output_name=args.output_name,
+        split_panels=bool(args.split_panels),
+        panel_output_dir=Path(args.panel_output_dir) if args.panel_output_dir else None,
     )
 
 
