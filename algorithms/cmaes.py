@@ -109,7 +109,10 @@ class CMAES(Experiment):
             survivors = individuals_sorted[: self.population_size]
             self._persist_generation_atomic(generation, individuals, survivors)
             print(
-                f"Finished generation {generation}. Best fitness: {survivors[0].fitness:.4f}",
+                # ind.fitness holds the raw metric (displacement); CMA-ES applies
+                # no age penalty, so this is both the recorded and ranked value.
+                f"Finished generation {generation}. "
+                f"Best {self.fitness_metric}: {survivors[0].fitness:.4f}",
                 flush=True,
             )
         try:

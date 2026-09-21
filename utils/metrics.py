@@ -27,6 +27,23 @@ METRICS_ABS = [
     *BODY_METRICS,
 ]
 
+# Per-generation metrics stored for each surviving individual, and therefore the
+# columns written to gens_robots.csv and the consolidated analysis CSVs.
+#
+# NOTE ON "fitness": this column holds the raw target behaviour -- the robot's
+# displacement (see set_fitness and --fitness_metric, which defaults to
+# "displacement") -- NOT the value the EA ranks individuals by. Selection uses an
+# age-penalized score computed in EA._fitness_value, which is never persisted.
+# The `fitness` and `displacement` columns are therefore numerically identical.
+#
+# The selection score can still be derived from what is stored, because `age` is
+# recorded alongside it:
+#
+#     f_selection = d                                  if a <= 10
+#     f_selection = d - |d| * (0.001 * min(a, 100))     if a > 10
+#
+# with d the `fitness`/`displacement` column and a the `age` column. Report
+# displacement; recompute the selection score from these two columns if needed.
 METRICS_REL = [
                 "uniqueness",
                 "fitness",
@@ -89,6 +106,13 @@ def update_body_metrics(individual, args):
         setattr(individual, metric, metrics[metric])
 
 def set_fitness(population, fitness_metric):
+    """Record the raw target behaviour on each individual.
+
+    Despite the name, this stores the unpenalized metric (displacement by
+    default), which is what ends up in the `fitness` column of the result CSVs.
+    The age-penalized score used for selection lives in EA._fitness_value and is
+    never written out; see the note on METRICS_REL for how to recover it.
+    """
     for ind in population:
         ind.fitness = float(getattr(ind, fitness_metric, None))
 

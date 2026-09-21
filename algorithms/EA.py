@@ -129,6 +129,10 @@ class EA(Experiment):
         raw target behaviour (``self.fitness_metric``, i.e. displacement). The
         penalty discounts an individual by 0.1% of its absolute displacement per
         generation of age beyond 10, capped at age 100 (a maximum 10% discount).
+
+        Nothing is lost by not persisting it: `age` is stored next to `fitness`
+        in the result CSVs, so this score can be recomputed from them at any
+        time. See the note on METRICS_REL in utils/metrics.py.
         """
         value = getattr(individual, "fitness", None)
         if value is None:
