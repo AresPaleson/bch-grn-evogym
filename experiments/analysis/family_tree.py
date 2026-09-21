@@ -289,7 +289,7 @@ def compose_vertical_tree(out_dir, nodes, margin=32, v_gap=28, arrow_len=20, rem
     max_w = max(im.width for im in imgs)
     captions = []
     for _, rid, fit, dist in nodes:
-        base = f"ID: {rid} | Fitness: {fit if fit is not None else 'NA'}"
+        base = f"ID: {rid} | Displacement: {fit if fit is not None else 'NA'}"
         if dist is not None:
             d1 = "NA" if dist["d_p1"] is None or dist["d_p1"] == float('inf') else f"{dist['d_p1']:.3f}"
             d2 = "NA" if dist["d_p2"] is None or dist["d_p2"] == float('inf') else f"{dist['d_p2']:.3f}"

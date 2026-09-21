@@ -121,6 +121,15 @@ class EA(Experiment):
         return individuals
 
     def _fitness_value(self, individual):
+        """Age-penalized selection score.
+
+        This is the value used to rank individuals for tournament selection and
+        survivor truncation only. It is never stored on the individual and never
+        written to the result files: the recorded ``fitness`` attribute holds the
+        raw target behaviour (``self.fitness_metric``, i.e. displacement). The
+        penalty discounts an individual by 0.1% of its absolute displacement per
+        generation of age beyond 10, capped at age 100 (a maximum 10% discount).
+        """
         value = getattr(individual, "fitness", None)
         if value is None:
             return float("-inf")
@@ -137,6 +146,7 @@ class EA(Experiment):
         return value
 
     def _sort_by_fitness(self, population):
+        """Rank by age-penalized selection score, not by raw displacement."""
         return sorted(population, key=self._fitness_value, reverse=True)
 
     def _set_relative_metrics(self, population, generation):
@@ -150,6 +160,7 @@ class EA(Experiment):
             ind.fitness = self._fitness_value_from_metric(ind)
 
     def _fitness_value_from_metric(self, individual):
+        """Raw target behaviour (displacement); this is what gets recorded."""
         return self._metric_value(individual, self.fitness_metric)
 
     def _metric_value(self, individual, metric):
@@ -264,8 +275,9 @@ class EA(Experiment):
         valid = int(sum(1 for ind in population if getattr(ind, "valid", 0)))
         print(
             f"Finished generation {generation}. "
-            f"Best {self.fitness_metric}: {self._fitness_value(best):.4f}. "
-            f"Mean finite fitness: {mean:.4f}. "
+            f"Best selection score (age-penalized): {self._fitness_value(best):.4f}. "
+            f"Best raw {self.fitness_metric}: {self._fitness_value_from_metric(best):.4f}. "
+            f"Mean finite selection score: {mean:.4f}. "
             f"Valid: {valid}/{len(population)}."
         )
 

@@ -745,7 +745,9 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
     fig, axes = plt.subplots(
         nrows=3,
         ncols=len(CROSSOVER_TYPES),
-        figsize=(27.0, 18.0),
+        # Scaled with the larger font constants above; at 27x18 the panel
+        # titles and colorbar labels overrun their columns.
+        figsize=(33.5, 22.3),
         sharex=True,
     )
 
@@ -808,7 +810,7 @@ def plot_all_crossover_density_grid(links_df, output_path, fitness_metric="displ
             axes[row, col].set_ylabel("")
 
     fig.suptitle(
-        "Parent-Child Fitness-Distance Density by Crossover Type",
+        "Parent-Child Displacement-Distance Density by Crossover Type",
         fontsize=FIGURE_TITLE_FONT_SIZE,
         y=0.95,
     )

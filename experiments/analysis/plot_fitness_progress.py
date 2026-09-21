@@ -167,7 +167,7 @@ def plot_metric_panel(
 
     ax.set_title(title)
     ax.set_xlabel("Generation")
-    ax.set_ylabel("Fitness")
+    ax.set_ylabel("Displacement")
     ax.grid(True)
     clean_axes(ax)
     return legend_handles, legend_labels
@@ -193,7 +193,7 @@ def run_plot(*, analysis_dir: Path, experiments_raw: str = "", output_name: str 
         axes[0],
         df,
         experiments,
-        title="Average Best Fitness Over Generations",
+        title="Average Best Displacement Over Generations",
         center_candidates=["fitness_max_mean", "fitness_max_median"],
         spread_candidates=["fitness_max_std"],
     )
@@ -201,7 +201,7 @@ def run_plot(*, analysis_dir: Path, experiments_raw: str = "", output_name: str 
         axes[1],
         df,
         experiments,
-        title="Average Mean Fitness Over Generations",
+        title="Average Mean Displacement Over Generations",
         center_candidates=["fitness_mean_mean", "fitness_mean_median"],
         spread_candidates=["fitness_mean_std", "fitness_std_median"],
     )

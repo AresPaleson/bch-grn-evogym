@@ -109,8 +109,8 @@ occupied_union_material_distance     mann_whitney_u homologous_gene_block_recomb
                    fitness_delta     mann_whitney_u            arithmetic_recombination     promoter_aligned_cut_and_splice   10   10                     19.09        92    0.001706     0.005119     cliffs_delta        0.84     significant
                    fitness_delta     mann_whitney_u homologous_gene_block_recombination     promoter_aligned_cut_and_splice   10   10                     2.919        56      0.6776       0.6776     cliffs_delta        0.12 not_significant
 
-Fitness Correlations
---------------------
+Displacement Correlations
+-------------------------
                               group                  distance_metric       outcome  n_links spearman_rho    p_value    decision
                                 all                   morph_distance child_fitness    34984      -0.6103          0 significant
                                 all                   morph_distance fitness_delta    34984      -0.4466          0 significant

@@ -244,7 +244,7 @@ def run_best_robot_family_lineup(
         role = "Best Robot" if idx == len(lineage) - 1 else "Ancestor"
         fit_text = f"{item['fitness']:.3f}" if item["fitness"] == item["fitness"] else "NA"
         ax.set_title(
-            f"Gen {item['generation']}\nID {item['robot_id']}\nFitness {fit_text}\n{role}",
+            f"Gen {item['generation']}\nID {item['robot_id']}\nDisplacement {fit_text}\n{role}",
             fontsize=10,
             pad=10,
         )

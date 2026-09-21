@@ -719,8 +719,8 @@ def write_results_file(
             ],
         ),
         "",
-        "Fitness Correlations",
-        "--------------------",
+        "Displacement Correlations",
+        "-------------------------",
         format_results_table(
             correlations_df,
             [

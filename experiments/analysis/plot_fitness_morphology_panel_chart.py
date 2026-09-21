@@ -41,6 +41,8 @@ CROSSOVER_HATCHES = {
 }
 BASE_FONT_SIZE = 34
 AXIS_TITLE_FONT_SIZE = 36
+# Panel titles in the 2x2 grid only; smaller so the longer "Displacement" fits.
+GRID_PANEL_TITLE_FONT_SIZE = 26
 AXIS_LABEL_FONT_SIZE = 34
 TICK_FONT_SIZE = 31
 LEGEND_FONT_SIZE = 31
@@ -51,7 +53,7 @@ PANEL_LABEL_FONT_SIZE = 42
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
-            "Draw a four-panel chart with best fitness, mean fitness, "
+            "Draw a four-panel chart with best displacement, mean displacement, "
             "parent-child morphology over generations, and parent-child "
             "morphology by crossover operator."
         )
@@ -173,7 +175,7 @@ def plot_fitness_panel(ax, fitness_df: pd.DataFrame, metric: str, title: str):
 
     ax.set_title(title)
     ax.set_xlabel("Generation")
-    ax.set_ylabel("Fitness")
+    ax.set_ylabel("Displacement")
     ax.set_ylim(bottom=0.1)
     ax.grid(True)
     clean_axes(ax)
@@ -337,7 +339,7 @@ def run_plot_individual(
     saved_paths = []
 
     fig, ax = plt.subplots(figsize=(9.0, 7.6))
-    handles, labels = plot_fitness_panel(ax, fitness_df, "best", "Best Fitness Over Gen.")
+    handles, labels = plot_fitness_panel(ax, fitness_df, "best", "Best Displacement Over Gen.")
     ax.set_title(ax.get_title(), pad=16)
     unique = dict(zip(labels, handles))
     fig.legend(
@@ -352,7 +354,7 @@ def run_plot_individual(
     print(f"Saved panel to: {output_path}")
 
     fig, ax = plt.subplots(figsize=(9.0, 7.6))
-    handles, labels = plot_fitness_panel(ax, fitness_df, "mean", "Mean Fitness Over Gen.")
+    handles, labels = plot_fitness_panel(ax, fitness_df, "mean", "Mean Displacement Over Gen.")
     ax.set_title(ax.get_title(), pad=16)
     unique = dict(zip(labels, handles))
     fig.legend(
@@ -430,13 +432,13 @@ def run_plot(
         axes[0, 0],
         fitness_df,
         "best",
-        "Best Fitness Over Generations",
+        "Best Displacement Over Generations",
     )
     plot_fitness_panel(
         axes[1, 0],
         fitness_df,
         "mean",
-        "Mean Fitness Over Generations",
+        "Mean Displacement Over Generations",
     )
     plot_generation_distance_panel(axes[0, 1], generation_summary_df)
     plot_crossover_distance_panel(axes[1, 1], links_df)
@@ -453,12 +455,15 @@ def run_plot(
         )
 
     fig.suptitle(
-        "Fitness and Parent-Child Morphological Distance",
+        "Displacement and Parent-Child Morphological Distance",
         fontsize=FIGURE_TITLE_FONT_SIZE,
         fontweight="bold",
         color="#1E2430",
         y=0.99,
     )
+    for ax in axes.flat:
+        ax.set_title(ax.get_title(), fontsize=GRID_PANEL_TITLE_FONT_SIZE)
+
     fig.tight_layout(rect=(0.055, 0.025, 1, 0.905), h_pad=3.0, w_pad=3.2)
 
     for label, ax in (
